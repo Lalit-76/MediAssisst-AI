@@ -1,12 +1,28 @@
+import os
+
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
+
+
+# ============================================================
+# ENVIRONMENT VARIABLES
+# ============================================================
+
+load_dotenv()
 
 
 # ============================================================
 # DATABASE CONFIGURATION
 # ============================================================
 
-DATABASE_URL = "postgresql+psycopg://postgres:2005@localhost:5432/mediassist_db"
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if not DATABASE_URL:
+    raise RuntimeError(
+        "DATABASE_URL is missing. "
+        "Please add DATABASE_URL to the backend .env file."
+    )
 
 
 # ============================================================

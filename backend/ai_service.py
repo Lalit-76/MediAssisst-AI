@@ -1,12 +1,47 @@
-from ollama import chat
-from ollama import ResponseError
+import os
+
+from dotenv import load_dotenv
+from google import genai
+from google.genai import types
 
 
-MODEL_NAME = "gemma3:4b"
+# ============================================================
+# ENVIRONMENT VARIABLES
+# ============================================================
 
+load_dotenv()
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+if not GEMINI_API_KEY:
+    raise RuntimeError(
+        "GEMINI_API_KEY is missing. "
+        "Please add GEMINI_API_KEY to backend/.env"
+    )
+
+
+# ============================================================
+# GEMINI CLIENT
+# ============================================================
+
+client = genai.Client(
+    api_key=GEMINI_API_KEY
+)
+
+
+# ============================================================
+# MODEL
+# ============================================================
+
+MODEL_NAME = "gemini-3.7-flash"
+
+
+# ============================================================
+# SYSTEM PROMPT
+# ============================================================
 
 SYSTEM_PROMPT = """
-You are MediAssist-AI, a health information assistant.
+You are MediAssist AI, a health information assistant.
 
 Your role is to provide general health information and educational
 guidance in simple, clear, and understandable language.
@@ -39,50 +74,45 @@ Never present a diagnosis as a confirmed fact.
 """
 
 
+# ============================================================
+# ASK AI
+# ============================================================
+
 def ask_ai(question: str) -> str:
     """
-    Send a question to the local Ollama Gemma model
-    and return the generated response.
+    Send a question to Gemini and return the generated response.
     """
 
     if not question or not question.strip():
         raise ValueError("Question cannot be empty.")
 
     try:
-
-        response = chat(
+        response = client.models.generate_content(
             model=MODEL_NAME,
-            messages=[
-                {
-                    "role": "system",
-                    "content": SYSTEM_PROMPT
-                },
-                {
-                    "role": "user",
-                    "content": question.strip()
-                }
-            ]
+            contents=question.strip(),
+            config=types.GenerateContentConfig(
+                system_instruction=SYSTEM_PROMPT,
+                temperature=0.4,
+                max_output_tokens=1000
+            )
         )
 
-        answer = response.message.content
+        answer = response.text
 
         if not answer or not answer.strip():
-            raise RuntimeError("AI returned an empty response.")
+            raise RuntimeError(
+                "Gemini returned an empty response."
+            )
 
         return answer.strip()
 
-    except ResponseError as error:
-
-        print("Ollama Error:", error)
-
-        raise RuntimeError(
-            f"Ollama could not generate a response: {error}"
-        ) from error
-
     except Exception as error:
-
-        print("AI Service Error:", error)
+        print("========================================")
+        print("GEMINI AI ERROR")
+        print("========================================")
+        print(repr(error))
+        print("========================================")
 
         raise RuntimeError(
-            "Unable to connect to the local AI service."
+            "Unable to generate a response from the AI service."
         ) from error

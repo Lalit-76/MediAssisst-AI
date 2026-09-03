@@ -1,0 +1,903 @@
+/* ============================================================
+   MEDIASSIST AI - HEALTH HISTORY PAGE
+   ============================================================ */
+
+.history-page {
+  min-height: 100vh;
+  width: 100%;
+  background: #f5f7fb;
+  color: #1f2937;
+  overflow-x: hidden;
+}
+
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.history-header {
+  min-height: 72px;
+  width: 100%;
+
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+  padding: 12px 40px;
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+
+/* ============================================================
+   LOGO
+   ============================================================ */
+
+.history-logo {
+  font-size: 24px;
+  font-weight: 800;
+  color: #1f2937;
+
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+
+  transition: opacity 0.2s ease;
+}
+
+.history-logo:hover {
+  opacity: 0.8;
+}
+
+.history-logo span {
+  color: #2563eb;
+}
+
+
+/* ============================================================
+   HEADER ACTIONS
+   ============================================================ */
+
+.history-header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+
+/* ============================================================
+   HEADER BUTTONS
+   ============================================================ */
+
+.back-dashboard-button,
+.logout-button {
+  min-height: 44px;
+
+  border: none;
+  border-radius: 8px;
+
+  padding: 10px 18px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.back-dashboard-button {
+  background: #eef2ff;
+  color: #2563eb;
+}
+
+.back-dashboard-button:hover {
+  background: #e0e7ff;
+  transform: translateY(-1px);
+}
+
+.back-dashboard-button:active {
+  transform: translateY(0);
+}
+
+.logout-button {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.logout-button:hover {
+  background: #fecaca;
+  transform: translateY(-1px);
+}
+
+.logout-button:active {
+  transform: translateY(0);
+}
+
+
+/* ============================================================
+   MAIN CONTAINER
+   ============================================================ */
+
+.history-container {
+  width: min(1100px, calc(100% - 40px));
+
+  margin: 0 auto;
+
+  padding: 45px 0 60px;
+}
+
+
+/* ============================================================
+   PAGE TITLE
+   ============================================================ */
+
+.history-title {
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  margin-bottom: 30px;
+
+  min-width: 0;
+}
+
+.history-icon {
+  width: 60px;
+  height: 60px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #dbeafe;
+  border-radius: 16px;
+
+  font-size: 30px;
+
+  box-shadow:
+    0 5px 20px rgba(15, 23, 42, 0.06);
+}
+
+.history-title > div:last-child {
+  min-width: 0;
+}
+
+.history-title h1 {
+  margin: 0 0 6px;
+
+  font-size: 32px;
+  font-weight: 800;
+
+  color: #111827;
+}
+
+.history-title p {
+  margin: 0;
+
+  color: #6b7280;
+
+  font-size: 15px;
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* ============================================================
+   GENERAL MESSAGE
+   ============================================================ */
+
+.history-message {
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+
+  padding: 60px 25px;
+
+  text-align: center;
+
+  box-shadow:
+    0 6px 24px rgba(15, 23, 42, 0.05);
+}
+
+.loading-icon {
+  font-size: 45px;
+  margin-bottom: 15px;
+}
+
+.history-message h2 {
+  margin: 0 0 8px;
+
+  color: #111827;
+
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.history-message p {
+  max-width: 650px;
+
+  margin: 0 auto;
+
+  color: #6b7280;
+
+  font-size: 14px;
+  line-height: 1.6;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* ============================================================
+   ERROR STATE
+   ============================================================ */
+
+.error-message {
+  background: #ffffff;
+  border: 1px solid #fecaca;
+}
+
+.error-message h2 {
+  color: #991b1b;
+}
+
+
+/* ============================================================
+   MESSAGE BUTTONS
+   ============================================================ */
+
+.retry-button,
+.assessment-button {
+  min-height: 44px;
+
+  border: none;
+  border-radius: 8px;
+
+  padding: 11px 18px;
+
+  margin-top: 18px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.retry-button {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.retry-button:hover {
+  background: #1d4ed8;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.assessment-button {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.assessment-button:hover {
+  background: #1d4ed8;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+
+/* ============================================================
+   HISTORY LIST
+   ============================================================ */
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+}
+
+
+/* ============================================================
+   HISTORY SUMMARY
+   ============================================================ */
+
+.history-summary {
+  display: flex;
+  align-items: baseline;
+
+  gap: 7px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  padding: 16px 20px;
+
+  border-radius: 12px;
+
+  margin-bottom: 20px;
+
+  color: #6b7280;
+
+  box-shadow:
+    0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.history-summary strong {
+  color: #2563eb;
+
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.history-summary span {
+  font-size: 14px;
+}
+
+
+/* ============================================================
+   HISTORY CARD
+   ============================================================ */
+
+.history-card {
+  width: 100%;
+  min-width: 0;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+
+  padding: 26px;
+
+  margin-bottom: 22px;
+
+  box-shadow:
+    0 6px 24px rgba(15, 23, 42, 0.05);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.history-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+
+/* ============================================================
+   CARD HEADER
+   ============================================================ */
+
+.history-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  gap: 20px;
+
+  border-bottom: 1px solid #eef2f7;
+
+  padding-bottom: 18px;
+  margin-bottom: 20px;
+
+  min-width: 0;
+}
+
+.history-card-header > div:first-child {
+  min-width: 0;
+}
+
+.history-card-header h2 {
+  margin: 0 0 6px;
+
+  color: #111827;
+
+  font-size: 19px;
+  font-weight: 700;
+
+  overflow-wrap: anywhere;
+}
+
+.history-card-header p {
+  margin: 0;
+
+  color: #6b7280;
+
+  font-size: 13px;
+}
+
+
+/* ============================================================
+   SEVERITY BADGE
+   ============================================================ */
+
+.severity-badge {
+  flex-shrink: 0;
+
+  background: #fff7ed;
+
+  border: 1px solid #fed7aa;
+
+  color: #c2410c;
+
+  padding: 8px 13px;
+
+  border-radius: 20px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/* ============================================================
+   HISTORY SECTIONS
+   ============================================================ */
+
+.history-section {
+  margin-bottom: 20px;
+  min-width: 0;
+}
+
+.history-section h3 {
+  margin: 0 0 8px;
+
+  color: #111827;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.history-section p {
+  margin: 0;
+
+  color: #4b5563;
+
+  font-size: 14px;
+  line-height: 1.65;
+
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+
+/* ============================================================
+   AI ANALYSIS
+   ============================================================ */
+
+.ai-analysis {
+  margin-top: 22px;
+
+  padding: 20px;
+
+  background: #f0f9ff;
+
+  border: 1px solid #bae6fd;
+
+  border-left: 4px solid #06b6d4;
+
+  border-radius: 12px;
+
+  min-width: 0;
+}
+
+.ai-analysis h3 {
+  margin: 0 0 12px;
+
+  color: #0e7490;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.ai-response {
+  min-width: 0;
+
+  color: #374151;
+
+  font-size: 14px;
+  line-height: 1.75;
+
+  white-space: pre-wrap;
+
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.ai-response p {
+  margin-top: 0;
+}
+
+.ai-response p:last-child {
+  margin-bottom: 0;
+}
+
+.ai-response ul,
+.ai-response ol {
+  padding-left: 20px;
+}
+
+.ai-response li {
+  margin-bottom: 6px;
+}
+
+.ai-response table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
+
+
+/* ============================================================
+   DISCLAIMER
+   ============================================================ */
+
+.history-disclaimer {
+  margin-top: 8px;
+
+  padding: 18px 20px;
+
+  background: #fffbeb;
+
+  border: 1px solid #fde68a;
+
+  border-radius: 12px;
+
+  color: #92400e;
+
+  font-size: 13px;
+  line-height: 1.65;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* ============================================================
+   BUTTON FOCUS
+   ============================================================ */
+
+.back-dashboard-button:focus-visible,
+.logout-button:focus-visible,
+.retry-button:focus-visible,
+.assessment-button:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.25);
+  outline-offset: 2px;
+}
+
+
+/* ============================================================
+   TABLET
+   ============================================================ */
+
+@media (max-width: 800px) {
+  .history-header {
+    padding: 12px 24px;
+  }
+
+  .history-container {
+    width: calc(100% - 32px);
+    padding-top: 35px;
+  }
+
+  .history-card {
+    padding: 22px;
+  }
+
+  .history-title h1 {
+    font-size: 29px;
+  }
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 700px) {
+  .history-header {
+    min-height: auto;
+
+    padding: 14px 16px;
+
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 12px;
+  }
+
+  .history-logo {
+    text-align: center;
+    font-size: 21px;
+  }
+
+  .history-header-actions {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 8px;
+  }
+
+  .back-dashboard-button,
+  .logout-button {
+    width: 100%;
+
+    min-height: 44px;
+
+    padding: 9px 10px;
+
+    font-size: 12px;
+  }
+
+  .history-container {
+    width: calc(100% - 24px);
+
+    padding: 28px 0 40px;
+  }
+
+  .history-title {
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin-bottom: 22px;
+  }
+
+  .history-icon {
+    width: 48px;
+    height: 48px;
+
+    border-radius: 13px;
+
+    font-size: 23px;
+  }
+
+  .history-title h1 {
+    font-size: 25px;
+  }
+
+  .history-title p {
+    font-size: 13px;
+  }
+
+  .history-summary {
+    padding: 14px 16px;
+  }
+
+  .history-summary strong {
+    font-size: 22px;
+  }
+
+  .history-summary span {
+    font-size: 13px;
+  }
+
+  .history-card {
+    padding: 19px;
+
+    border-radius: 14px;
+  }
+
+  .history-card-header {
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .severity-badge {
+    align-self: flex-start;
+  }
+
+  .history-card-header h2 {
+    font-size: 17px;
+  }
+
+  .history-card-header p {
+    font-size: 12px;
+  }
+
+  .history-section h3,
+  .ai-analysis h3 {
+    font-size: 14px;
+  }
+
+  .history-section p,
+  .ai-response {
+    font-size: 13px;
+  }
+
+  .ai-analysis {
+    padding: 16px;
+
+    border-left-width: 3px;
+  }
+
+  .history-message {
+    padding: 45px 18px;
+  }
+
+  .history-disclaimer {
+    padding: 15px;
+
+    font-size: 12px;
+  }
+}
+
+
+/* ============================================================
+   SMALL MOBILE
+   ============================================================ */
+
+@media (max-width: 450px) {
+  .history-header {
+    padding: 13px 11px;
+  }
+
+  .history-logo {
+    font-size: 20px;
+  }
+
+  .history-header-actions {
+    gap: 6px;
+  }
+
+  .back-dashboard-button,
+  .logout-button {
+    font-size: 11px;
+    padding: 8px 6px;
+  }
+
+  .history-container {
+    width: calc(100% - 18px);
+  }
+
+  .history-title {
+    gap: 9px;
+  }
+
+  .history-icon {
+    width: 43px;
+    height: 43px;
+
+    font-size: 20px;
+  }
+
+  .history-title h1 {
+    font-size: 22px;
+  }
+
+  .history-title p {
+    font-size: 11px;
+  }
+
+  .history-summary {
+    padding: 12px 14px;
+  }
+
+  .history-card {
+    padding: 16px;
+  }
+
+  .history-card-header h2 {
+    font-size: 16px;
+  }
+
+  .history-section h3,
+  .ai-analysis h3 {
+    font-size: 13px;
+  }
+
+  .history-section p,
+  .ai-response {
+    font-size: 12px;
+    line-height: 1.65;
+  }
+
+  .ai-analysis {
+    padding: 14px;
+  }
+
+  .history-disclaimer {
+    padding: 13px;
+
+    font-size: 11px;
+  }
+
+  .history-message h2 {
+    font-size: 19px;
+  }
+
+  .history-message p {
+    font-size: 12px;
+  }
+}
+
+
+/* ============================================================
+   VERY SMALL MOBILE
+   ============================================================ */
+
+@media (max-width: 360px) {
+  .history-header-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .history-container {
+    width: calc(100% - 14px);
+  }
+
+  .history-card {
+    padding: 14px;
+  }
+
+  .severity-badge {
+    font-size: 11px;
+    padding: 7px 10px;
+  }
+
+  .history-title h1 {
+    font-size: 20px;
+  }
+
+  .history-title p {
+    font-size: 10px;
+  }
+
+  .history-card-header h2 {
+    font-size: 15px;
+  }
+
+  .history-section p,
+  .ai-response {
+    font-size: 11px;
+  }
+}
+
+
+/* ============================================================
+   TOUCH DEVICES
+   ============================================================ */
+
+@media (hover: none) and (pointer: coarse) {
+  .back-dashboard-button,
+  .logout-button,
+  .retry-button,
+  .assessment-button {
+    min-height: 44px;
+  }
+}

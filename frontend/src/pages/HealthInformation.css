@@ -1,0 +1,1562 @@
+/* ============================================================
+   MediAssist-AI - HEALTH INFORMATION PAGE
+============================================================ */
+
+
+/* ============================================================
+   PAGE
+============================================================ */
+
+.health-info-page {
+  min-height: 100vh;
+
+  background: #f5f7fb;
+
+  color: #1f2937;
+
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+
+  overflow-x: hidden;
+}
+
+
+/* ============================================================
+   HEADER
+============================================================ */
+
+.health-info-header {
+  width: 100%;
+
+  min-height: 72px;
+
+  padding: 0 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  box-sizing: border-box;
+}
+
+
+.health-info-logo {
+  font-size: 24px;
+
+  font-weight: 800;
+
+  color: #172554;
+
+  cursor: pointer;
+
+  user-select: none;
+
+  white-space: nowrap;
+}
+
+
+.health-info-logo span {
+  color: #2563eb;
+}
+
+
+.health-info-header-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+
+/* ============================================================
+   HEADER BUTTONS
+============================================================ */
+
+.back-dashboard-button,
+.logout-button {
+  border: none;
+
+  border-radius: 9px;
+
+  padding: 10px 17px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+
+.back-dashboard-button {
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  border: 1px solid #dbeafe;
+}
+
+
+.back-dashboard-button:hover {
+  background: #dbeafe;
+
+  transform: translateY(-1px);
+}
+
+
+.logout-button {
+  background: #fee2e2;
+
+  color: #dc2626;
+
+  border: 1px solid #fecaca;
+}
+
+
+.logout-button:hover {
+  background: #fecaca;
+
+  transform: translateY(-1px);
+}
+
+
+/* ============================================================
+   MAIN CONTAINER
+============================================================ */
+
+.health-info-container {
+  width: min(1180px, calc(100% - 48px));
+
+  margin: 0 auto;
+
+  padding: 45px 0 60px;
+
+  box-sizing: border-box;
+}
+
+
+/* ============================================================
+   PAGE TITLE
+============================================================ */
+
+.health-info-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  margin-bottom: 30px;
+}
+
+
+.health-info-main-icon {
+  width: 64px;
+  height: 64px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 18px;
+
+  background: #eff6ff;
+
+  font-size: 32px;
+
+  box-shadow:
+    0 8px 25px rgba(37, 99, 235, 0.08);
+}
+
+
+.health-info-title > div:last-child {
+  min-width: 0;
+}
+
+
+.health-info-title h1 {
+  margin: 0 0 6px;
+
+  font-size: 32px;
+
+  line-height: 1.2;
+
+  color: #111827;
+
+  overflow-wrap: anywhere;
+}
+
+
+.health-info-title p {
+  margin: 0;
+
+  color: #6b7280;
+
+  font-size: 15px;
+
+  line-height: 1.6;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* ============================================================
+   SEARCH
+============================================================ */
+
+.health-search-container {
+  margin-bottom: 35px;
+}
+
+
+.health-search {
+  width: 100%;
+
+  min-height: 54px;
+
+  display: flex;
+
+  align-items: center;
+
+  box-sizing: border-box;
+
+  padding: 0 16px;
+
+  background: #ffffff;
+
+  border: 1px solid #dbe2ea;
+
+  border-radius: 13px;
+
+  box-shadow:
+    0 4px 18px rgba(15, 23, 42, 0.04);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.health-search:focus-within {
+  border-color: #60a5fa;
+
+  box-shadow:
+    0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+
+.health-search-icon {
+  margin-right: 11px;
+
+  font-size: 19px;
+
+  opacity: 0.7;
+
+  flex-shrink: 0;
+}
+
+
+.health-search input {
+  flex: 1;
+
+  width: 100%;
+
+  min-width: 0;
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  font-size: 15px;
+
+  color: #111827;
+}
+
+
+.health-search input::placeholder {
+  color: #9ca3af;
+}
+
+
+.clear-search-button {
+  width: 30px;
+  height: 30px;
+
+  flex-shrink: 0;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background: #f3f4f6;
+
+  color: #6b7280;
+
+  cursor: pointer;
+
+  font-size: 13px;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+
+.clear-search-button:hover {
+  background: #e5e7eb;
+
+  color: #111827;
+}
+
+
+.health-search-count {
+  margin-top: 10px;
+
+  font-size: 13px;
+
+  color: #6b7280;
+}
+
+
+/* ============================================================
+   SECTION HEADER
+============================================================ */
+
+.health-info-section-header {
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 18px;
+}
+
+
+.health-info-section-title {
+  margin: 0;
+
+  font-size: 22px;
+
+  color: #111827;
+
+  overflow-wrap: anywhere;
+}
+
+
+.health-info-section-header p {
+  margin: 5px 0 0;
+
+  font-size: 14px;
+
+  color: #6b7280;
+
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* ============================================================
+   TOPIC GRID
+============================================================ */
+
+.health-topic-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 20px;
+
+  margin-bottom: 38px;
+}
+
+
+/* ============================================================
+   TOPIC CARD
+============================================================ */
+
+.health-topic-card {
+  position: relative;
+
+  min-height: 255px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  padding: 25px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 16px;
+
+  cursor: default;
+
+  box-shadow:
+    0 5px 20px rgba(15, 23, 42, 0.04);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+
+.health-topic-card:hover {
+  transform: translateY(-5px);
+
+  border-color: #bfdbfe;
+
+  box-shadow:
+    0 14px 30px rgba(15, 23, 42, 0.08);
+}
+
+
+.health-topic-card.active-topic {
+  border-color: #60a5fa;
+
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.08),
+    0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+
+.health-topic-icon {
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 17px;
+
+  border-radius: 14px;
+
+  background: #f0f7ff;
+
+  font-size: 27px;
+
+  flex-shrink: 0;
+}
+
+
+.health-topic-card h3 {
+  margin: 0 0 9px;
+
+  font-size: 18px;
+
+  color: #111827;
+
+  line-height: 1.3;
+
+  overflow-wrap: anywhere;
+}
+
+
+.health-topic-card p {
+  margin: 0;
+
+  font-size: 14px;
+
+  line-height: 1.65;
+
+  color: #6b7280;
+
+  overflow-wrap: anywhere;
+}
+
+
+.health-topic-card button {
+  align-self: flex-start;
+
+  margin-top: auto;
+
+  padding-top: 20px;
+
+  border: none;
+
+  background: transparent;
+
+  color: #2563eb;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.health-topic-card button:hover {
+  color: #1d4ed8;
+
+  transform: translateX(3px);
+}
+
+
+/* ============================================================
+   TOPIC DETAIL
+============================================================ */
+
+.topic-detail-card {
+  position: relative;
+
+  margin-bottom: 40px;
+
+  padding: 30px;
+
+  background: #ffffff;
+
+  border: 1px solid #bfdbfe;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 12px 35px rgba(15, 23, 42, 0.07);
+
+  scroll-margin-top: 20px;
+
+  animation: topicAppear 0.3s ease;
+
+  box-sizing: border-box;
+}
+
+
+@keyframes topicAppear {
+  from {
+    opacity: 0;
+
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+
+.close-topic-button {
+  position: absolute;
+
+  top: 18px;
+
+  right: 18px;
+
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background: #f3f4f6;
+
+  color: #6b7280;
+
+  cursor: pointer;
+
+  font-size: 15px;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+
+.close-topic-button:hover {
+  background: #e5e7eb;
+
+  color: #111827;
+}
+
+
+/* ============================================================
+   DETAIL TITLE
+============================================================ */
+
+.topic-detail-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+  padding-right: 45px;
+
+  margin-bottom: 25px;
+}
+
+
+.topic-detail-icon {
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 15px;
+
+  background: #eff6ff;
+
+  font-size: 29px;
+}
+
+
+.topic-detail-title > div:last-child {
+  min-width: 0;
+}
+
+
+.topic-detail-title h2 {
+  margin: 0 0 5px;
+
+  font-size: 23px;
+
+  color: #111827;
+
+  line-height: 1.3;
+
+  overflow-wrap: anywhere;
+}
+
+
+.topic-detail-title p {
+  margin: 0;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+
+  color: #6b7280;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* ============================================================
+   DETAIL CONTENT
+============================================================ */
+
+.topic-content {
+  padding-top: 20px;
+
+  border-top: 1px solid #eef2f7;
+}
+
+
+.topic-content h3 {
+  margin: 0 0 18px;
+
+  font-size: 17px;
+
+  color: #1f2937;
+
+  overflow-wrap: anywhere;
+}
+
+
+.topic-point {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 12px;
+
+  margin-bottom: 14px;
+
+  padding: 13px 15px;
+
+  background: #f8fafc;
+
+  border-radius: 10px;
+
+  box-sizing: border-box;
+}
+
+
+.topic-point span {
+  width: 23px;
+  height: 23px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #dbeafe;
+
+  color: #2563eb;
+
+  font-size: 12px;
+
+  font-weight: 800;
+}
+
+
+.topic-point p {
+  margin: 1px 0 0;
+
+  font-size: 14px;
+
+  line-height: 1.65;
+
+  color: #4b5563;
+
+  overflow-wrap: anywhere;
+
+  min-width: 0;
+}
+
+
+/* ============================================================
+   TOPIC NOTE
+============================================================ */
+
+.topic-note {
+  margin-top: 20px;
+
+  padding: 14px 16px;
+
+  background: #fffbeb;
+
+  border: 1px solid #fde68a;
+
+  border-radius: 10px;
+
+  color: #92400e;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* ============================================================
+   NO SEARCH RESULTS
+============================================================ */
+
+.health-no-results {
+  padding: 55px 20px;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 16px;
+
+  margin-bottom: 38px;
+
+  box-sizing: border-box;
+}
+
+
+.no-results-icon {
+  font-size: 40px;
+
+  margin-bottom: 12px;
+}
+
+
+.health-no-results h2 {
+  margin: 0 0 8px;
+
+  font-size: 20px;
+
+  color: #111827;
+}
+
+
+.health-no-results p {
+  margin: 0 0 20px;
+
+  color: #6b7280;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+
+.health-no-results button {
+  padding: 10px 18px;
+
+  border: none;
+
+  border-radius: 9px;
+
+  background: #2563eb;
+
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.health-no-results button:hover {
+  background: #1d4ed8;
+
+  transform: translateY(-1px);
+}
+
+
+/* ============================================================
+   AI ASSISTANT CARD
+============================================================ */
+
+.health-info-ai-card {
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+
+  margin-top: 10px;
+
+  margin-bottom: 25px;
+
+  padding: 25px 28px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eff6ff 0%,
+      #f5f3ff 100%
+    );
+
+  border: 1px solid #dbeafe;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 8px 25px rgba(37, 99, 235, 0.06);
+
+  box-sizing: border-box;
+}
+
+
+.health-info-ai-icon {
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  font-size: 29px;
+
+  box-shadow:
+    0 5px 15px rgba(15, 23, 42, 0.06);
+}
+
+
+.health-info-ai-content {
+  flex: 1;
+
+  min-width: 0;
+}
+
+
+.health-info-ai-content h2 {
+  margin: 0 0 6px;
+
+  font-size: 19px;
+
+  color: #111827;
+
+  overflow-wrap: anywhere;
+}
+
+
+.health-info-ai-content p {
+  margin: 0;
+
+  max-width: 700px;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+
+  color: #5b6472;
+
+  overflow-wrap: anywhere;
+}
+
+
+.health-info-ai-card button {
+  flex-shrink: 0;
+
+  padding: 12px 20px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: #2563eb;
+
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 6px 15px rgba(37, 99, 235, 0.2);
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.health-info-ai-card button:hover {
+  background: #1d4ed8;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 9px 20px rgba(37, 99, 235, 0.25);
+}
+
+
+/* ============================================================
+   DISCLAIMER
+============================================================ */
+
+.health-info-disclaimer {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 12px;
+
+  padding: 17px 19px;
+
+  background: #fff7ed;
+
+  border: 1px solid #fed7aa;
+
+  border-radius: 12px;
+
+  color: #7c2d12;
+
+  font-size: 13px;
+
+  line-height: 1.65;
+
+  overflow-wrap: anywhere;
+}
+
+
+.disclaimer-icon {
+  flex-shrink: 0;
+
+  font-size: 18px;
+}
+
+
+/* ============================================================
+   TABLET
+============================================================ */
+
+@media (max-width: 900px) {
+
+  .health-info-header {
+    padding: 0 25px;
+  }
+
+
+  .health-info-container {
+    width: min(100% - 36px, 760px);
+
+    padding-top: 35px;
+  }
+
+
+  .health-topic-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  .health-info-ai-card {
+    align-items: flex-start;
+
+    flex-wrap: wrap;
+  }
+
+
+  .health-info-ai-card button {
+    margin-left: 78px;
+  }
+}
+
+
+/* ============================================================
+   MOBILE
+============================================================ */
+
+@media (max-width: 600px) {
+
+  .health-info-header {
+    min-height: auto;
+
+    padding: 16px 14px;
+
+    align-items: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+  }
+
+
+  .health-info-logo {
+    font-size: 20px;
+  }
+
+
+  .health-info-header-actions {
+    gap: 7px;
+  }
+
+
+  .back-dashboard-button,
+  .logout-button {
+    padding: 8px 10px;
+
+    font-size: 12px;
+  }
+
+
+  .health-info-container {
+    width: calc(100% - 24px);
+
+    padding: 28px 0 40px;
+  }
+
+
+  .health-info-title {
+    align-items: flex-start;
+
+    gap: 13px;
+
+    margin-bottom: 24px;
+  }
+
+
+  .health-info-main-icon {
+    width: 50px;
+    height: 50px;
+
+    border-radius: 14px;
+
+    font-size: 25px;
+  }
+
+
+  .health-info-title h1 {
+    font-size: 25px;
+  }
+
+
+  .health-info-title p {
+    font-size: 13px;
+  }
+
+
+  .health-search-container {
+    margin-bottom: 28px;
+  }
+
+
+  .health-search {
+    min-height: 50px;
+
+    padding: 0 13px;
+  }
+
+
+  .health-search input {
+    font-size: 16px;
+  }
+
+
+  .health-search-icon {
+    font-size: 17px;
+
+    margin-right: 8px;
+  }
+
+
+  .health-info-section-header {
+    flex-direction: column;
+
+    gap: 3px;
+  }
+
+
+  .health-topic-grid {
+    grid-template-columns: 1fr;
+
+    gap: 15px;
+  }
+
+
+  .health-topic-card {
+    min-height: 225px;
+
+    padding: 21px;
+  }
+
+
+  .health-topic-icon {
+    width: 48px;
+    height: 48px;
+
+    font-size: 24px;
+  }
+
+
+  .health-topic-card h3 {
+    font-size: 17px;
+  }
+
+
+  .health-topic-card p {
+    font-size: 13px;
+  }
+
+
+  .health-info-section-title {
+    font-size: 20px;
+  }
+
+
+  .topic-detail-card {
+    padding: 22px 18px;
+
+    border-radius: 15px;
+
+    margin-bottom: 28px;
+  }
+
+
+  .close-topic-button {
+    top: 13px;
+
+    right: 13px;
+  }
+
+
+  .topic-detail-title {
+    align-items: flex-start;
+
+    gap: 12px;
+
+    padding-right: 30px;
+  }
+
+
+  .topic-detail-icon {
+    width: 48px;
+    height: 48px;
+
+    font-size: 24px;
+  }
+
+
+  .topic-detail-title h2 {
+    font-size: 20px;
+  }
+
+
+  .topic-detail-title p {
+    font-size: 13px;
+  }
+
+
+  .topic-content {
+    padding-top: 17px;
+  }
+
+
+  .topic-content h3 {
+    font-size: 16px;
+
+    margin-bottom: 14px;
+  }
+
+
+  .topic-point {
+    padding: 11px;
+
+    gap: 9px;
+  }
+
+
+  .topic-point span {
+    width: 22px;
+    height: 22px;
+
+    font-size: 11px;
+  }
+
+
+  .topic-point p {
+    font-size: 13px;
+  }
+
+
+  .topic-note {
+    padding: 13px;
+
+    font-size: 12px;
+  }
+
+
+  .health-no-results {
+    padding: 42px 16px;
+  }
+
+
+  .health-no-results h2 {
+    font-size: 18px;
+  }
+
+
+  .health-no-results p {
+    font-size: 13px;
+  }
+
+
+  .health-no-results button {
+    width: 100%;
+
+    min-height: 44px;
+  }
+
+
+  .health-info-ai-card {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 14px;
+
+    padding: 22px;
+
+    border-radius: 15px;
+  }
+
+
+  .health-info-ai-icon {
+    width: 52px;
+    height: 52px;
+
+    font-size: 26px;
+  }
+
+
+  .health-info-ai-content h2 {
+    font-size: 18px;
+  }
+
+
+  .health-info-ai-content p {
+    font-size: 13px;
+  }
+
+
+  .health-info-ai-card button {
+    width: 100%;
+
+    margin-left: 0;
+
+    min-height: 46px;
+  }
+
+
+  .health-info-disclaimer {
+    padding: 14px;
+
+    font-size: 12px;
+  }
+}
+
+
+/* ============================================================
+   SMALL MOBILE
+============================================================ */
+
+@media (max-width: 400px) {
+
+  .health-info-header {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    padding: 14px 12px;
+  }
+
+
+  .health-info-logo {
+    text-align: center;
+
+    font-size: 19px;
+  }
+
+
+  .health-info-header-actions {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+
+  .back-dashboard-button,
+  .logout-button {
+    flex: 1;
+
+    min-height: 42px;
+  }
+
+
+  .health-info-container {
+    width: calc(100% - 18px);
+
+    padding-top: 24px;
+  }
+
+
+  .health-info-title {
+    gap: 10px;
+  }
+
+
+  .health-info-main-icon {
+    width: 44px;
+    height: 44px;
+
+    font-size: 21px;
+  }
+
+
+  .health-info-title h1 {
+    font-size: 22px;
+  }
+
+
+  .health-info-title p {
+    font-size: 12px;
+  }
+
+
+  .health-search {
+    padding: 0 11px;
+  }
+
+
+  .health-topic-card {
+    padding: 18px;
+
+    min-height: 210px;
+  }
+
+
+  .topic-detail-card {
+    padding: 20px 15px;
+  }
+
+
+  .topic-detail-title {
+    padding-right: 28px;
+  }
+
+
+  .topic-detail-title h2 {
+    font-size: 18px;
+  }
+
+
+  .topic-point {
+    padding: 10px;
+  }
+
+
+  .health-info-ai-card {
+    padding: 18px;
+  }
+}
+
+
+/* ============================================================
+   VERY SMALL DEVICES
+============================================================ */
+
+@media (max-width: 360px) {
+
+  .health-info-logo {
+    font-size: 18px;
+  }
+
+
+  .back-dashboard-button,
+  .logout-button {
+    font-size: 11px;
+
+    padding: 8px 7px;
+  }
+
+
+  .health-info-title h1 {
+    font-size: 21px;
+  }
+
+
+  .health-info-title p {
+    font-size: 11px;
+  }
+
+
+  .health-info-section-title {
+    font-size: 18px;
+  }
+
+
+  .health-topic-card h3 {
+    font-size: 16px;
+  }
+
+
+  .health-topic-card p {
+    font-size: 12px;
+  }
+
+
+  .topic-detail-card {
+    padding: 18px 13px;
+  }
+
+
+  .topic-detail-icon {
+    width: 44px;
+    height: 44px;
+
+    font-size: 22px;
+  }
+
+
+  .topic-detail-title h2 {
+    font-size: 17px;
+  }
+
+
+  .topic-point p {
+    font-size: 12px;
+  }
+
+
+  .health-info-ai-content h2 {
+    font-size: 17px;
+  }
+}
+
+
+/* ============================================================
+   TOUCH DEVICES
+============================================================ */
+
+@media (hover: none) {
+
+  .back-dashboard-button:hover,
+  .logout-button:hover,
+  .clear-search-button:hover,
+  .health-topic-card:hover,
+  .health-topic-card button:hover,
+  .close-topic-button:hover,
+  .health-no-results button:hover,
+  .health-info-ai-card button:hover {
+    transform: none;
+  }
+
+  .health-topic-card:hover {
+    border-color: #e5e7eb;
+
+    box-shadow:
+      0 5px 20px rgba(15, 23, 42, 0.04);
+  }
+}

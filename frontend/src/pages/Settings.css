@@ -1,0 +1,1414 @@
+/* ============================================================
+   SETTINGS PAGE
+============================================================ */
+
+.settings-page {
+  min-height: 100vh;
+  background: #f5f7fb;
+  color: #1f2937;
+  overflow-x: hidden;
+}
+
+
+/* ============================================================
+   HEADER
+============================================================ */
+
+.settings-header {
+  min-height: 72px;
+
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 40px;
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  box-sizing: border-box;
+}
+
+
+/* ============================================================
+   LOGO
+============================================================ */
+
+.settings-logo {
+  font-size: 24px;
+  font-weight: 800;
+
+  color: #1f2937;
+
+  cursor: pointer;
+  user-select: none;
+
+  white-space: nowrap;
+}
+
+.settings-logo span {
+  color: #2563eb;
+}
+
+
+/* ============================================================
+   HEADER ACTIONS
+============================================================ */
+
+.settings-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+/* ============================================================
+   HEADER BUTTONS
+============================================================ */
+
+.settings-header .back-dashboard-button,
+.settings-header .logout-button {
+  border: none;
+
+  padding: 10px 18px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.settings-header .back-dashboard-button {
+  background: #eef2ff;
+  color: #2563eb;
+}
+
+
+.settings-header .back-dashboard-button:hover {
+  background: #e0e7ff;
+  transform: translateY(-1px);
+}
+
+
+.settings-header .logout-button {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+
+.settings-header .logout-button:hover {
+  background: #fecaca;
+  transform: translateY(-1px);
+}
+
+
+/* ============================================================
+   MAIN CONTAINER
+============================================================ */
+
+.settings-container {
+  width: min(900px, calc(100% - 40px));
+
+  margin: 0 auto;
+
+  padding: 45px 0 60px;
+
+  box-sizing: border-box;
+}
+
+
+/* ============================================================
+   PAGE TITLE
+============================================================ */
+
+.settings-title {
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  margin-bottom: 30px;
+}
+
+
+.settings-main-icon {
+  width: 58px;
+  height: 58px;
+
+  background: #dbeafe;
+
+  border-radius: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 28px;
+
+  flex-shrink: 0;
+}
+
+
+.settings-title > div:last-child {
+  min-width: 0;
+}
+
+
+.settings-title h1 {
+  margin: 0 0 5px;
+
+  font-size: 32px;
+  font-weight: 800;
+
+  color: #111827;
+
+  overflow-wrap: anywhere;
+}
+
+
+.settings-title p {
+  margin: 0;
+
+  color: #6b7280;
+
+  font-size: 15px;
+
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* ============================================================
+   SETTINGS CARD
+============================================================ */
+
+.settings-card {
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 16px;
+
+  padding: 28px;
+
+  margin-bottom: 22px;
+
+  box-shadow:
+    0 6px 24px rgba(15, 23, 42, 0.05);
+
+  box-sizing: border-box;
+}
+
+
+/* ============================================================
+   CARD HEADER
+============================================================ */
+
+.settings-card-header {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid #eef2f7;
+
+  margin-bottom: 5px;
+}
+
+
+.settings-card-header > div:last-child {
+  min-width: 0;
+}
+
+
+.settings-section-icon {
+  width: 46px;
+  height: 46px;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+
+  background: #eff6ff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 21px;
+}
+
+
+.settings-card-header h2 {
+  margin: 0 0 4px;
+
+  font-size: 19px;
+  font-weight: 750;
+
+  color: #111827;
+
+  overflow-wrap: anywhere;
+}
+
+
+.settings-card-header p {
+  margin: 0;
+
+  color: #6b7280;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* ============================================================
+   SETTINGS ROW
+============================================================ */
+
+.settings-row {
+  min-height: 68px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 16px 4px;
+
+  border-bottom: 1px solid #f1f5f9;
+
+  box-sizing: border-box;
+}
+
+
+.settings-row:last-child {
+  border-bottom: none;
+}
+
+
+.settings-row-info {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+
+  min-width: 0;
+
+  flex: 1;
+}
+
+
+.settings-label {
+  color: #6b7280;
+
+  font-size: 13px;
+  font-weight: 500;
+}
+
+
+.settings-row-info strong {
+  color: #111827;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  word-break: break-word;
+
+  overflow-wrap: anywhere;
+}
+
+
+.settings-row-info p {
+  margin: 0;
+
+  color: #6b7280;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+
+  word-break: break-word;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* ============================================================
+   ACTION BUTTON
+============================================================ */
+
+.settings-action-button {
+  flex-shrink: 0;
+
+  border: 1px solid #bfdbfe;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  padding: 9px 15px;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.settings-action-button:hover {
+  background: #dbeafe;
+
+  border-color: #93c5fd;
+}
+
+
+.settings-action-button:active {
+  transform: translateY(1px);
+}
+
+
+/* ============================================================
+   PASSWORD FORM
+============================================================ */
+
+.password-form {
+  margin-top: 20px;
+
+  padding: 20px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 12px;
+
+  box-sizing: border-box;
+}
+
+
+.password-form-title {
+  margin: 0 0 18px;
+
+  color: #111827;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* ============================================================
+   PASSWORD FIELD
+============================================================ */
+
+.password-field {
+  margin-bottom: 16px;
+}
+
+
+.password-field:last-of-type {
+  margin-bottom: 0;
+}
+
+
+.password-field label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #374151;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+.password-input-wrapper {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+}
+
+
+.password-input {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  border: 1px solid #d1d5db;
+
+  background: #ffffff;
+
+  color: #111827;
+
+  padding: 11px 45px 11px 13px;
+
+  border-radius: 8px;
+
+  outline: none;
+
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.password-input:focus {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+
+.password-input::placeholder {
+  color: #9ca3af;
+}
+
+
+/* ============================================================
+   SHOW / HIDE PASSWORD
+============================================================ */
+
+.password-visibility-button {
+  position: absolute;
+
+  right: 10px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  border: none;
+
+  background: transparent;
+
+  color: #6b7280;
+
+  font-size: 16px;
+
+  cursor: pointer;
+
+  padding: 5px;
+
+  line-height: 1;
+}
+
+
+.password-visibility-button:hover {
+  color: #2563eb;
+}
+
+
+/* ============================================================
+   PASSWORD FORM ACTIONS
+============================================================ */
+
+.password-form-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-top: 20px;
+}
+
+
+.password-cancel-button,
+.password-submit-button {
+  padding: 10px 16px;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+
+.password-cancel-button {
+  border: 1px solid #d1d5db;
+
+  background: #ffffff;
+
+  color: #374151;
+}
+
+
+.password-cancel-button:hover {
+  background: #f3f4f6;
+}
+
+
+.password-submit-button {
+  border: none;
+
+  background: #2563eb;
+
+  color: #ffffff;
+}
+
+
+.password-submit-button:hover {
+  background: #1d4ed8;
+
+  transform: translateY(-1px);
+}
+
+
+.password-submit-button:disabled,
+.password-cancel-button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* ============================================================
+   PASSWORD MESSAGE
+============================================================ */
+
+.password-message {
+  margin-top: 15px;
+
+  padding: 11px 13px;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+
+.password-message.success {
+  background: #f0fdf4;
+
+  border: 1px solid #bbf7d0;
+
+  color: #166534;
+}
+
+
+.password-message.error {
+  background: #fef2f2;
+
+  border: 1px solid #fecaca;
+
+  color: #b91c1c;
+}
+
+
+/* ============================================================
+   SECURITY NOTE
+============================================================ */
+
+.settings-security-note {
+  margin-top: 16px;
+
+  padding: 14px 16px;
+
+  border-radius: 10px;
+
+  background: #f0fdf4;
+
+  border: 1px solid #bbf7d0;
+
+  color: #166534;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* ============================================================
+   TOGGLE
+============================================================ */
+
+.settings-toggle {
+  width: 52px;
+  height: 28px;
+
+  flex-shrink: 0;
+
+  border: none;
+
+  border-radius: 30px;
+
+  background: #cbd5e1;
+
+  padding: 3px;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+
+  transition: background 0.2s ease;
+
+  box-sizing: border-box;
+}
+
+
+.settings-toggle.enabled {
+  background: #2563eb;
+}
+
+
+.toggle-circle {
+  width: 22px;
+  height: 22px;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  display: block;
+
+  transform: translateX(0);
+
+  transition: transform 0.2s ease;
+
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+
+.settings-toggle.enabled .toggle-circle {
+  transform: translateX(24px);
+}
+
+
+/* ============================================================
+   PRIVACY INFORMATION
+============================================================ */
+
+.privacy-information {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.privacy-item {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 14px;
+
+  padding: 18px 4px;
+
+  border-bottom: 1px solid #f1f5f9;
+}
+
+
+.privacy-item:last-child {
+  border-bottom: none;
+}
+
+
+.privacy-item > span {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  background: #f8fafc;
+
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+}
+
+
+.privacy-item > div {
+  min-width: 0;
+}
+
+
+.privacy-item strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #111827;
+
+  font-size: 14px;
+
+  overflow-wrap: anywhere;
+}
+
+
+.privacy-item p {
+  margin: 0;
+
+  color: #6b7280;
+
+  font-size: 13px;
+
+  line-height: 1.55;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* ============================================================
+   DANGER CARD
+============================================================ */
+
+.settings-danger-card {
+  border-color: #fecaca;
+}
+
+
+.settings-danger-card .settings-section-icon {
+  background: #fef2f2;
+}
+
+
+.settings-danger-content {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding-top: 18px;
+}
+
+
+.settings-danger-content > div {
+  min-width: 0;
+  flex: 1;
+}
+
+
+.settings-danger-content strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #111827;
+
+  font-size: 15px;
+
+  overflow-wrap: anywhere;
+}
+
+
+.settings-danger-content p {
+  margin: 0;
+
+  color: #6b7280;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+
+.settings-logout-button {
+  flex-shrink: 0;
+
+  border: none;
+
+  background: #dc2626;
+
+  color: #ffffff;
+
+  padding: 11px 18px;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.settings-logout-button:hover {
+  background: #b91c1c;
+
+  transform: translateY(-1px);
+}
+
+
+/* ============================================================
+   DISCLAIMER
+============================================================ */
+
+.settings-disclaimer {
+  margin-top: 5px;
+
+  padding: 18px 20px;
+
+  background: #fffbeb;
+
+  border: 1px solid #fde68a;
+
+  border-radius: 12px;
+
+  color: #92400e;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* ============================================================
+   LOADING
+============================================================ */
+
+.settings-loading {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+
+  background: #f5f7fb;
+
+  color: #2563eb;
+
+  font-size: 18px;
+  font-weight: 600;
+
+  text-align: center;
+}
+
+
+/* ============================================================
+   TABLET
+============================================================ */
+
+@media (max-width: 900px) {
+
+  .settings-header {
+    padding: 0 24px;
+  }
+
+  .settings-container {
+    width: min(900px, calc(100% - 32px));
+
+    padding-top: 38px;
+  }
+
+  .settings-card {
+    padding: 24px;
+  }
+}
+
+
+/* ============================================================
+   MOBILE
+============================================================ */
+
+@media (max-width: 700px) {
+
+  .settings-header {
+    min-height: 68px;
+
+    padding: 14px 18px;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+  }
+
+
+  .settings-logo {
+    font-size: 21px;
+  }
+
+
+  .settings-header-actions {
+    gap: 8px;
+  }
+
+
+  .settings-header .back-dashboard-button,
+  .settings-header .logout-button {
+    padding: 9px 12px;
+
+    font-size: 12px;
+  }
+
+
+  .settings-container {
+    width: calc(100% - 24px);
+
+    padding: 30px 0 40px;
+  }
+
+
+  .settings-title {
+    gap: 12px;
+
+    align-items: flex-start;
+  }
+
+
+  .settings-main-icon {
+    width: 48px;
+    height: 48px;
+
+    font-size: 23px;
+
+    border-radius: 14px;
+  }
+
+
+  .settings-title h1 {
+    font-size: 26px;
+  }
+
+
+  .settings-title p {
+    font-size: 13px;
+  }
+
+
+  .settings-card {
+    padding: 22px 18px;
+
+    border-radius: 14px;
+  }
+
+
+  .settings-card-header {
+    gap: 10px;
+
+    padding-bottom: 17px;
+  }
+
+
+  .settings-section-icon {
+    width: 42px;
+    height: 42px;
+
+    font-size: 19px;
+
+    border-radius: 11px;
+  }
+
+
+  .settings-card-header h2 {
+    font-size: 17px;
+  }
+
+
+  .settings-card-header p {
+    font-size: 12px;
+  }
+
+
+  .settings-row {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    padding: 16px 2px;
+  }
+
+
+  .settings-action-button {
+    width: 100%;
+
+    min-height: 43px;
+  }
+
+
+  .settings-toggle {
+    align-self: flex-end;
+  }
+
+
+  .password-form {
+    padding: 16px;
+  }
+
+
+  .password-form-actions {
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+
+  .password-cancel-button,
+  .password-submit-button {
+    width: 100%;
+
+    min-height: 44px;
+  }
+
+
+  .settings-danger-content {
+    align-items: stretch;
+
+    flex-direction: column;
+
+    gap: 14px;
+  }
+
+
+  .settings-logout-button {
+    width: 100%;
+
+    min-height: 44px;
+  }
+
+
+  .privacy-item {
+    gap: 11px;
+
+    padding: 15px 2px;
+  }
+
+
+  .privacy-item > span {
+    width: 36px;
+    height: 36px;
+
+    font-size: 16px;
+  }
+
+
+  .settings-security-note {
+    padding: 13px 14px;
+  }
+
+
+  .settings-disclaimer {
+    padding: 16px;
+  }
+}
+
+
+/* ============================================================
+   SMALL MOBILE
+============================================================ */
+
+@media (max-width: 450px) {
+
+  .settings-header {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    padding: 13px 14px;
+  }
+
+
+  .settings-logo {
+    text-align: center;
+
+    font-size: 20px;
+  }
+
+
+  .settings-header-actions {
+    width: 100%;
+
+    justify-content: center;
+
+    gap: 8px;
+  }
+
+
+  .settings-header .back-dashboard-button,
+  .settings-header .logout-button {
+    flex: 1;
+
+    min-height: 42px;
+
+    padding: 9px 10px;
+  }
+
+
+  .settings-title {
+    gap: 10px;
+
+    margin-bottom: 22px;
+  }
+
+
+  .settings-main-icon {
+    width: 44px;
+    height: 44px;
+
+    font-size: 20px;
+
+    border-radius: 13px;
+  }
+
+
+  .settings-title h1 {
+    font-size: 24px;
+  }
+
+
+  .settings-title p {
+    font-size: 12px;
+
+    line-height: 1.45;
+  }
+
+
+  .settings-card {
+    padding: 18px 15px;
+
+    border-radius: 13px;
+
+    margin-bottom: 18px;
+  }
+
+
+  .settings-card-header {
+    gap: 9px;
+  }
+
+
+  .settings-section-icon {
+    width: 40px;
+    height: 40px;
+
+    font-size: 18px;
+  }
+
+
+  .settings-card-header h2 {
+    font-size: 16px;
+  }
+
+
+  .settings-card-header p {
+    font-size: 11px;
+  }
+
+
+  .settings-row-info strong {
+    font-size: 14px;
+  }
+
+
+  .settings-row-info p {
+    font-size: 12px;
+  }
+
+
+  .settings-action-button {
+    font-size: 12px;
+  }
+
+
+  .password-form {
+    padding: 14px;
+  }
+
+
+  .password-form-title {
+    font-size: 15px;
+  }
+
+
+  .password-field label {
+    font-size: 12px;
+  }
+
+
+  .password-input {
+    font-size: 16px;
+  }
+
+
+  .settings-danger-content strong {
+    font-size: 14px;
+  }
+
+
+  .settings-danger-content p {
+    font-size: 12px;
+  }
+
+
+  .settings-disclaimer {
+    padding: 14px;
+
+    font-size: 12px;
+  }
+}
+
+
+/* ============================================================
+   VERY SMALL DEVICES
+============================================================ */
+
+@media (max-width: 360px) {
+
+  .settings-header {
+    padding: 11px 10px;
+  }
+
+
+  .settings-logo {
+    font-size: 18px;
+  }
+
+
+  .settings-header .back-dashboard-button,
+  .settings-header .logout-button {
+    font-size: 11px;
+
+    padding: 8px 7px;
+  }
+
+
+  .settings-container {
+    width: calc(100% - 16px);
+
+    padding-top: 22px;
+  }
+
+
+  .settings-title h1 {
+    font-size: 22px;
+  }
+
+
+  .settings-title p {
+    font-size: 11px;
+  }
+
+
+  .settings-main-icon {
+    width: 40px;
+    height: 40px;
+
+    font-size: 18px;
+  }
+
+
+  .settings-card {
+    padding: 16px 13px;
+  }
+
+
+  .settings-card-header h2 {
+    font-size: 15px;
+  }
+
+
+  .settings-section-icon {
+    width: 38px;
+    height: 38px;
+
+    font-size: 17px;
+  }
+
+
+  .settings-row {
+    padding: 14px 1px;
+  }
+
+
+  .settings-toggle {
+    width: 50px;
+    height: 27px;
+  }
+
+
+  .toggle-circle {
+    width: 21px;
+    height: 21px;
+  }
+
+
+  .settings-toggle.enabled .toggle-circle {
+    transform: translateX(23px);
+  }
+}
+
+
+/* ============================================================
+   TOUCH DEVICES
+============================================================ */
+
+@media (hover: none) {
+
+  .settings-header .back-dashboard-button:hover,
+  .settings-header .logout-button:hover,
+  .settings-action-button:hover,
+  .password-cancel-button:hover,
+  .password-submit-button:hover,
+  .password-visibility-button:hover,
+  .settings-logout-button:hover {
+    transform: none;
+  }
+}

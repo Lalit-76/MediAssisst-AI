@@ -21,7 +21,34 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL:
     raise RuntimeError(
         "DATABASE_URL is missing. "
-        "Please add DATABASE_URL to the backend .env file."
+        "Please add DATABASE_URL to the environment variables."
+    )
+
+
+# ============================================================
+# DATABASE DRIVER COMPATIBILITY
+# ============================================================
+
+# Render may provide:
+# postgresql://...
+# or
+# postgres://...
+#
+# SQLAlchemy would normally try psycopg2 for these URLs.
+# Our project uses psycopg 3, so explicitly use the psycopg driver.
+
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace(
+        "postgres://",
+        "postgresql+psycopg://",
+        1
+    )
+
+elif DATABASE_URL.startswith("postgresql://"):
+    DATABASE_URL = DATABASE_URL.replace(
+        "postgresql://",
+        "postgresql+psycopg://",
+        1
     )
 
 

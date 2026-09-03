@@ -85,7 +85,7 @@ function Register() {
       // Send registration data to FastAPI
 
       const response = await fetch(
-        "http://127.0.0.1:8000/register",
+        "https://mediassist-backend-70gs.onrender.com/register",
         {
           method: "POST",
 

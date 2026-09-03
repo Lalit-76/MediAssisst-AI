@@ -104,7 +104,7 @@ const handleForgotPassword = async (e) => {
     setForgotLoading(true);
 
     const response = await fetch(
-      "http://127.0.0.1:8000/forgot-password",
+      "https://mediassist-backend-70gs.onrender.com/forgot-password",
       {
         method: "POST",
 
@@ -185,7 +185,7 @@ const handleForgotPassword = async (e) => {
       // --------------------------------------------------------
 
       const response = await fetch(
-        "http://127.0.0.1:8000/login",
+        "https://mediassist-backend-70gs.onrender.com/login",
         {
           method: "POST",
 

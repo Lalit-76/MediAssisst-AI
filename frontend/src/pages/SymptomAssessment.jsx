@@ -243,7 +243,7 @@ function SymptomAssessment() {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/assessment",
+        "https://mediassist-backend-70gs.onrender.com/assessment",
         {
           method: "POST",
 
@@ -405,7 +405,7 @@ Keep the answer clear and understandable.
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/chat",
+        "https://mediassist-backend-70gs.onrender.com/chat",
         {
           method: "POST",
 

@@ -27,7 +27,7 @@ function HealthHistory() {
       setError("");
 
       const response = await fetch(
-        "http://127.0.0.1:8000/assessments",
+        "https://mediassist-backend-70gs.onrender.com/assessments",
         {
           method: "GET",
           headers: {

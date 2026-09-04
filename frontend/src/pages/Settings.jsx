@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Settings.css";
 
+const API_URL = "https://mediassist-backend-70gs.onrender.com";
+
 function Settings() {
   const navigate = useNavigate();
 
@@ -11,6 +13,37 @@ function Settings() {
   const [healthReminders, setHealthReminders] = useState(true);
 
   const [message, setMessage] = useState("");
+
+  // ============================================================
+  // CHANGE PASSWORD
+  // ============================================================
+
+  const [showPasswordModal, setShowPasswordModal] =
+    useState(false);
+
+  const [currentPassword, setCurrentPassword] =
+    useState("");
+
+  const [newPassword, setNewPassword] =
+    useState("");
+
+  const [confirmPassword, setConfirmPassword] =
+    useState("");
+
+  const [showCurrentPassword, setShowCurrentPassword] =
+    useState(false);
+
+  const [showNewPassword, setShowNewPassword] =
+    useState(false);
+
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState(false);
+
+  const [passwordLoading, setPasswordLoading] =
+    useState(false);
+
+  const [passwordMessage, setPasswordMessage] =
+    useState("");
 
   // ============================================================
   // LOAD USER AND SETTINGS
@@ -33,7 +66,6 @@ function Settings() {
 
       setUser(parsedUser);
 
-      // Load saved preferences
       const savedNotifications =
         localStorage.getItem("notifications");
 
@@ -41,7 +73,9 @@ function Settings() {
         localStorage.getItem("healthReminders");
 
       if (savedNotifications !== null) {
-        setNotifications(savedNotifications === "true");
+        setNotifications(
+          savedNotifications === "true"
+        );
       }
 
       if (savedHealthReminders !== null) {
@@ -50,7 +84,10 @@ function Settings() {
         );
       }
     } catch (error) {
-      console.error("Invalid user data:", error);
+      console.error(
+        "Invalid user data:",
+        error
+      );
 
       localStorage.removeItem("user");
       localStorage.removeItem("access_token");
@@ -119,19 +156,180 @@ function Settings() {
   const showMessage = (text) => {
     setMessage(text);
 
-    setTimeout(() => {
+    window.setTimeout(() => {
       setMessage("");
     }, 2500);
+  };
+
+  // ============================================================
+  // OPEN PASSWORD MODAL
+  // ============================================================
+
+  const openPasswordModal = () => {
+    setCurrentPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
+    setPasswordMessage("");
+
+    setShowCurrentPassword(false);
+    setShowNewPassword(false);
+    setShowConfirmPassword(false);
+
+    setShowPasswordModal(true);
+  };
+
+  // ============================================================
+  // CLOSE PASSWORD MODAL
+  // ============================================================
+
+  const closePasswordModal = () => {
+    if (passwordLoading) {
+      return;
+    }
+
+    setShowPasswordModal(false);
+
+    setCurrentPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
+    setPasswordMessage("");
   };
 
   // ============================================================
   // CHANGE PASSWORD
   // ============================================================
 
-  const handleChangePassword = () => {
-    alert(
-      "Password change functionality will be added in the next step."
+  const handleChangePassword = async (event) => {
+    event.preventDefault();
+
+    setPasswordMessage("");
+
+    if (!currentPassword) {
+      setPasswordMessage(
+        "Please enter your current password."
+      );
+      return;
+    }
+
+    if (!newPassword) {
+      setPasswordMessage(
+        "Please enter a new password."
+      );
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      setPasswordMessage(
+        "New password must be at least 6 characters long."
+      );
+      return;
+    }
+
+    if (!confirmPassword) {
+      setPasswordMessage(
+        "Please confirm your new password."
+      );
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setPasswordMessage(
+        "New passwords do not match."
+      );
+      return;
+    }
+
+    if (currentPassword === newPassword) {
+      setPasswordMessage(
+        "New password must be different from your current password."
+      );
+      return;
+    }
+
+    const token = localStorage.getItem(
+      "access_token"
     );
+
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      setPasswordLoading(true);
+
+      const response = await fetch(
+        `${API_URL}/change-password`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+
+          body: JSON.stringify({
+            current_password: currentPassword,
+            new_password: newPassword,
+            confirm_password: confirmPassword
+          })
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.status === 401) {
+        localStorage.removeItem(
+          "access_token"
+        );
+
+        localStorage.removeItem(
+          "user"
+        );
+
+        navigate("/login");
+
+        return;
+      }
+
+      if (!response.ok) {
+        setPasswordMessage(
+          data.detail ||
+            "Unable to change password."
+        );
+
+        return;
+      }
+
+      setPasswordMessage(
+        "Password changed successfully."
+      );
+
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+
+      window.setTimeout(() => {
+        setShowPasswordModal(false);
+        setPasswordMessage("");
+
+        showMessage(
+          "Password changed successfully."
+        );
+      }, 1200);
+
+    } catch (error) {
+      console.error(
+        "Change password error:",
+        error
+      );
+
+      setPasswordMessage(
+        "Cannot connect to the server. Please try again."
+      );
+    } finally {
+      setPasswordLoading(false);
+    }
   };
 
   // ============================================================
@@ -161,7 +359,16 @@ function Settings() {
 
         <div
           className="settings-logo"
-          onClick={() => navigate("/dashboard")}
+          onClick={() =>
+            navigate("/dashboard")
+          }
+          role="button"
+          tabIndex={0}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              navigate("/dashboard");
+            }
+          }}
         >
           MediAssist <span>AI</span>
         </div>
@@ -169,13 +376,17 @@ function Settings() {
         <div className="settings-header-actions">
 
           <button
+            type="button"
             className="back-dashboard-button"
-            onClick={() => navigate("/dashboard")}
+            onClick={() =>
+              navigate("/dashboard")
+            }
           >
             ← Dashboard
           </button>
 
           <button
+            type="button"
             className="logout-button"
             onClick={handleLogout}
           >
@@ -186,14 +397,11 @@ function Settings() {
 
       </header>
 
-
       {/* ======================================================
           MAIN
       ====================================================== */}
 
       <main className="settings-container">
-
-        {/* PAGE TITLE */}
 
         <div className="settings-title">
 
@@ -215,20 +423,14 @@ function Settings() {
 
         </div>
 
-
-        {/* ====================================================
-            SUCCESS MESSAGE
-        ==================================================== */}
-
         {message && (
           <div className="settings-message">
             ✓ {message}
           </div>
         )}
 
-
         {/* ====================================================
-            ACCOUNT SETTINGS
+            ACCOUNT
         ==================================================== */}
 
         <section className="settings-card">
@@ -240,7 +442,6 @@ function Settings() {
             </div>
 
             <div>
-
               <h2>
                 Account
               </h2>
@@ -248,16 +449,13 @@ function Settings() {
               <p>
                 Your current account information.
               </p>
-
             </div>
 
           </div>
 
-
           <div className="settings-row">
 
             <div className="settings-row-info">
-
               <span className="settings-label">
                 Name
               </span>
@@ -265,16 +463,13 @@ function Settings() {
               <strong>
                 {user.name || "Not available"}
               </strong>
-
             </div>
 
           </div>
 
-
           <div className="settings-row">
 
             <div className="settings-row-info">
-
               <span className="settings-label">
                 Email
               </span>
@@ -282,16 +477,13 @@ function Settings() {
               <strong>
                 {user.email || "Not available"}
               </strong>
-
             </div>
 
           </div>
 
-
           <div className="settings-row">
 
             <div className="settings-row-info">
-
               <span className="settings-label">
                 User ID
               </span>
@@ -299,13 +491,11 @@ function Settings() {
               <strong>
                 {user.id}
               </strong>
-
             </div>
 
           </div>
 
         </section>
-
 
         {/* ====================================================
             SECURITY
@@ -333,7 +523,6 @@ function Settings() {
 
           </div>
 
-
           <div className="settings-row">
 
             <div className="settings-row-info">
@@ -348,16 +537,15 @@ function Settings() {
 
             </div>
 
-
             <button
+              type="button"
               className="settings-action-button"
-              onClick={handleChangePassword}
+              onClick={openPasswordModal}
             >
               Change Password
             </button>
 
           </div>
-
 
           <div className="settings-security-note">
 
@@ -368,7 +556,6 @@ function Settings() {
           </div>
 
         </section>
-
 
         {/* ====================================================
             NOTIFICATIONS
@@ -396,9 +583,6 @@ function Settings() {
 
           </div>
 
-
-          {/* GENERAL NOTIFICATIONS */}
-
           <div className="settings-row">
 
             <div className="settings-row-info">
@@ -413,7 +597,6 @@ function Settings() {
 
             </div>
 
-
             <button
               type="button"
               className={`settings-toggle ${
@@ -423,15 +606,10 @@ function Settings() {
               aria-label="Toggle notifications"
               aria-pressed={notifications}
             >
-
               <span className="toggle-circle"></span>
-
             </button>
 
           </div>
-
-
-          {/* HEALTH REMINDERS */}
 
           <div className="settings-row">
 
@@ -448,7 +626,6 @@ function Settings() {
 
             </div>
 
-
             <button
               type="button"
               className={`settings-toggle ${
@@ -458,15 +635,12 @@ function Settings() {
               aria-label="Toggle health reminders"
               aria-pressed={healthReminders}
             >
-
               <span className="toggle-circle"></span>
-
             </button>
 
           </div>
 
         </section>
-
 
         {/* ====================================================
             PRIVACY
@@ -494,7 +668,6 @@ function Settings() {
 
           </div>
 
-
           <div className="privacy-information">
 
             <div className="privacy-item">
@@ -518,7 +691,6 @@ function Settings() {
 
             </div>
 
-
             <div className="privacy-item">
 
               <span>
@@ -533,13 +705,12 @@ function Settings() {
 
                 <p>
                   Your account information is associated
-                  with your MediAssist AIaccount.
+                  with your MediAssist AI account.
                 </p>
 
               </div>
 
             </div>
-
 
             <div className="privacy-item">
 
@@ -567,7 +738,6 @@ function Settings() {
 
         </section>
 
-
         {/* ====================================================
             ACCOUNT ACTIONS
         ==================================================== */}
@@ -594,7 +764,6 @@ function Settings() {
 
           </div>
 
-
           <div className="settings-danger-content">
 
             <div>
@@ -610,8 +779,8 @@ function Settings() {
 
             </div>
 
-
             <button
+              type="button"
               className="settings-logout-button"
               onClick={handleLogout}
             >
@@ -622,7 +791,6 @@ function Settings() {
 
         </section>
 
-
         {/* ====================================================
             DISCLAIMER
         ==================================================== */}
@@ -630,7 +798,6 @@ function Settings() {
         <div className="settings-disclaimer">
 
           ⚠️ <strong>Important:</strong>{" "}
-
           MediAssist AI is a health information
           application. It does not provide medical
           diagnosis, treatment, or professional medical
@@ -643,6 +810,270 @@ function Settings() {
         </div>
 
       </main>
+
+      {/* ======================================================
+          CHANGE PASSWORD MODAL
+      ====================================================== */}
+
+      {showPasswordModal && (
+        <div
+          className="password-modal-overlay"
+          onMouseDown={(event) => {
+            if (
+              event.target === event.currentTarget &&
+              !passwordLoading
+            ) {
+              closePasswordModal();
+            }
+          }}
+        >
+
+          <div
+            className="password-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="change-password-title"
+          >
+
+            <div className="password-modal-icon">
+              🔐
+            </div>
+
+            <div className="password-modal-header">
+
+              <span>
+                SECURITY
+              </span>
+
+              <h2 id="change-password-title">
+                Change Password
+              </h2>
+
+              <p>
+                Update your MediAssist AI account password.
+              </p>
+
+            </div>
+
+            <form
+              className="password-form"
+              onSubmit={handleChangePassword}
+            >
+
+              {/* CURRENT PASSWORD */}
+
+              <div className="password-form-group">
+
+                <label htmlFor="current-password">
+                  Current Password
+                </label>
+
+                <div className="settings-password-wrapper">
+
+                  <input
+                    id="current-password"
+                    type={
+                      showCurrentPassword
+                        ? "text"
+                        : "password"
+                    }
+                    value={currentPassword}
+                    onChange={(event) => {
+                      setCurrentPassword(
+                        event.target.value
+                      );
+                      setPasswordMessage("");
+                    }}
+                    placeholder="Enter current password"
+                    autoComplete="current-password"
+                    disabled={passwordLoading}
+                  />
+
+                  <button
+                    type="button"
+                    className="settings-password-toggle"
+                    onClick={() =>
+                      setShowCurrentPassword(
+                        !showCurrentPassword
+                      )
+                    }
+                    disabled={passwordLoading}
+                    aria-label={
+                      showCurrentPassword
+                        ? "Hide password"
+                        : "Show password"
+                    }
+                  >
+                    {showCurrentPassword
+                      ? "🙈"
+                      : "👁️"}
+                  </button>
+
+                </div>
+
+              </div>
+
+              {/* NEW PASSWORD */}
+
+              <div className="password-form-group">
+
+                <label htmlFor="new-password">
+                  New Password
+                </label>
+
+                <div className="settings-password-wrapper">
+
+                  <input
+                    id="new-password"
+                    type={
+                      showNewPassword
+                        ? "text"
+                        : "password"
+                    }
+                    value={newPassword}
+                    onChange={(event) => {
+                      setNewPassword(
+                        event.target.value
+                      );
+                      setPasswordMessage("");
+                    }}
+                    placeholder="Enter new password"
+                    autoComplete="new-password"
+                    disabled={passwordLoading}
+                  />
+
+                  <button
+                    type="button"
+                    className="settings-password-toggle"
+                    onClick={() =>
+                      setShowNewPassword(
+                        !showNewPassword
+                      )
+                    }
+                    disabled={passwordLoading}
+                    aria-label={
+                      showNewPassword
+                        ? "Hide password"
+                        : "Show password"
+                    }
+                  >
+                    {showNewPassword
+                      ? "🙈"
+                      : "👁️"}
+                  </button>
+
+                </div>
+
+              </div>
+
+              {/* CONFIRM PASSWORD */}
+
+              <div className="password-form-group">
+
+                <label htmlFor="confirm-password">
+                  Confirm New Password
+                </label>
+
+                <div className="settings-password-wrapper">
+
+                  <input
+                    id="confirm-password"
+                    type={
+                      showConfirmPassword
+                        ? "text"
+                        : "password"
+                    }
+                    value={confirmPassword}
+                    onChange={(event) => {
+                      setConfirmPassword(
+                        event.target.value
+                      );
+                      setPasswordMessage("");
+                    }}
+                    placeholder="Confirm new password"
+                    autoComplete="new-password"
+                    disabled={passwordLoading}
+                  />
+
+                  <button
+                    type="button"
+                    className="settings-password-toggle"
+                    onClick={() =>
+                      setShowConfirmPassword(
+                        !showConfirmPassword
+                      )
+                    }
+                    disabled={passwordLoading}
+                    aria-label={
+                      showConfirmPassword
+                        ? "Hide password"
+                        : "Show password"
+                    }
+                  >
+                    {showConfirmPassword
+                      ? "🙈"
+                      : "👁️"}
+                  </button>
+
+                </div>
+
+                <small>
+                  Password must contain at least 6 characters.
+                </small>
+
+              </div>
+
+              {/* MESSAGE */}
+
+              {passwordMessage && (
+                <div
+                  className={`password-modal-message ${
+                    passwordMessage.includes(
+                      "successfully"
+                    )
+                      ? "password-success"
+                      : "password-error"
+                  }`}
+                >
+                  {passwordMessage.includes(
+                    "successfully"
+                  )
+                    ? "✓"
+                    : "⚠️"}{" "}
+                  {passwordMessage}
+                </div>
+              )}
+
+              {/* ACTIONS */}
+
+              <div className="password-modal-actions">
+
+                <button
+                  type="button"
+                  className="password-modal-cancel"
+                  onClick={closePasswordModal}
+                  disabled={passwordLoading}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="submit"
+                  className="password-modal-save"
+                  disabled={passwordLoading}
+                >
+                  {passwordLoading
+                    ? "Updating..."
+                    : "Update Password"}
+                </button>
+
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+      )}
 
     </div>
   );

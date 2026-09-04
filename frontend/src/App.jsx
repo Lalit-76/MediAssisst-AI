@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
@@ -15,66 +15,31 @@ import SymptomAssessment from "./pages/SymptomAssessment.jsx";
 
 import "./App.css";
 
+/* =========================================================
+   PAGE TRANSITION
+========================================================= */
 
-function App() {
+function AnimatedRoutes() {
+  const location = useLocation();
+
   return (
-    <BrowserRouter>
-      <Routes>
+    <div className="page-transition" key={location.pathname}>
+      <Routes location={location}>
+        {/* HOME */}
+        <Route path="/" element={<Home />} />
 
-        {/* =====================================================
-            HOME
-        ===================================================== */}
+        {/* AUTHENTICATION */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
 
-        <Route
-          path="/"
-          element={<Home />}
-        />
+        {/* DASHBOARD */}
+        <Route path="/dashboard" element={<Dashboard />} />
 
+        {/* AI CHAT */}
+        <Route path="/chat" element={<Chat />} />
 
-        {/* =====================================================
-            AUTHENTICATION
-        ===================================================== */}
-
-        <Route
-          path="/login"
-          element={<Login />}
-        />
-
-        <Route
-          path="/register"
-          element={<Register />}
-        />
-
-        <Route
-          path="/reset-password"
-          element={<ResetPassword />}
-        />
-
-
-        {/* =====================================================
-            DASHBOARD
-        ===================================================== */}
-
-        <Route
-          path="/dashboard"
-          element={<Dashboard />}
-        />
-
-
-        {/* =====================================================
-            AI CHAT
-        ===================================================== */}
-
-        <Route
-          path="/chat"
-          element={<Chat />}
-        />
-
-
-        {/* =====================================================
-            HEALTH / SYMPTOM ASSESSMENT
-        ===================================================== */}
-
+        {/* HEALTH / SYMPTOM ASSESSMENT */}
         <Route
           path="/health-assessment"
           element={<SymptomAssessment />}
@@ -90,11 +55,7 @@ function App() {
           element={<SymptomAssessment />}
         />
 
-
-        {/* =====================================================
-            HEALTH HISTORY
-        ===================================================== */}
-
+        {/* HEALTH HISTORY */}
         <Route
           path="/health-history"
           element={<HealthHistory />}
@@ -105,37 +66,30 @@ function App() {
           element={<HealthHistory />}
         />
 
-
-        {/* =====================================================
-            HEALTH INFORMATION
-        ===================================================== */}
-
+        {/* HEALTH INFORMATION */}
         <Route
           path="/health-information"
           element={<HealthInformation />}
         />
 
+        {/* PROFILE */}
+        <Route path="/profile" element={<Profile />} />
 
-        {/* =====================================================
-            PROFILE
-        ===================================================== */}
-
-        <Route
-          path="/profile"
-          element={<Profile />}
-        />
-
-
-        {/* =====================================================
-            SETTINGS
-        ===================================================== */}
-
-        <Route
-          path="/settings"
-          element={<Settings />}
-        />
-
+        {/* SETTINGS */}
+        <Route path="/settings" element={<Settings />} />
       </Routes>
+    </div>
+  );
+}
+
+/* =========================================================
+   APP
+========================================================= */
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AnimatedRoutes />
     </BrowserRouter>
   );
 }

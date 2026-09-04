@@ -15,23 +15,14 @@ function ResetPassword() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  // ============================================================
-  // RESET PASSWORD
-  // ============================================================
-
   const handleResetPassword = async (e) => {
     e.preventDefault();
 
     setMessage("");
 
-    // Get development reset token
     const resetToken = localStorage.getItem(
       "password_reset_token"
     );
-
-    // ==========================================================
-    // CHECK TOKEN
-    // ==========================================================
 
     if (!resetToken) {
       setMessage(
@@ -39,10 +30,6 @@ function ResetPassword() {
       );
       return;
     }
-
-    // ==========================================================
-    // CHECK PASSWORD
-    // ==========================================================
 
     if (!newPassword || !confirmPassword) {
       setMessage(
@@ -65,10 +52,6 @@ function ResetPassword() {
       return;
     }
 
-    // ==========================================================
-    // SEND RESET REQUEST
-    // ==========================================================
-
     try {
       setLoading(true);
 
@@ -76,11 +59,9 @@ function ResetPassword() {
         "https://mediassist-backend-70gs.onrender.com/reset-password",
         {
           method: "POST",
-
           headers: {
             "Content-Type": "application/json"
           },
-
           body: JSON.stringify({
             token: resetToken,
             new_password: newPassword
@@ -90,34 +71,25 @@ function ResetPassword() {
 
       const data = await response.json();
 
-      // ========================================================
-      // SUCCESS
-      // ========================================================
-
       if (response.ok) {
         localStorage.removeItem(
           "password_reset_token"
         );
 
         setSuccess(true);
-
         setMessage(
           "Password reset successfully!"
         );
 
         setNewPassword("");
         setConfirmPassword("");
-
       } else {
-
         setMessage(
           data.detail ||
           "Unable to reset password."
         );
       }
-
     } catch (error) {
-
       console.error(
         "Reset password error:",
         error
@@ -126,48 +98,39 @@ function ResetPassword() {
       setMessage(
         "Cannot connect to the server. Make sure FastAPI is running."
       );
-
     } finally {
-
       setLoading(false);
     }
   };
-
-
-  // ============================================================
-  // SUCCESS SCREEN
-  // ============================================================
 
   if (success) {
     return (
       <div className="auth-page">
 
-        <div className="auth-card">
+        <div className="auth-card reset-success-card">
 
           <div className="auth-logo">
             MediAssist<span>AI</span>
           </div>
 
+          <div className="reset-success-icon">
+            ✓
+          </div>
+
+          <div className="reset-success-label">
+            PASSWORD UPDATED
+          </div>
+
           <h1>
-            Password Reset Successful ✅
+            Password Reset Successful
           </h1>
 
           <p className="auth-subtitle">
-            Your MediAssist AI password has been changed successfully.
+            Your MediAssist AI password has been
+            changed successfully.
           </p>
 
-          <div
-            className="form-message"
-            style={{
-              color: "#0f766e",
-              backgroundColor: "#ecfdf5",
-              border: "1px solid #a7f3d0",
-              padding: "12px",
-              borderRadius: "8px",
-              marginBottom: "16px",
-              textAlign: "center"
-            }}
-          >
+          <div className="form-message reset-success-message">
             {message}
           </div>
 
@@ -192,11 +155,6 @@ function ResetPassword() {
     );
   }
 
-
-  // ============================================================
-  // RESET PASSWORD FORM
-  // ============================================================
-
   return (
     <div className="auth-page">
 
@@ -206,19 +164,20 @@ function ResetPassword() {
           MediAssist<span>AI</span>
         </div>
 
+        <div className="reset-page-icon">
+          🔐
+        </div>
+
         <h1>
-          Reset Password 🔐
+          Reset Password
         </h1>
 
         <p className="auth-subtitle">
-          Create a new password for your MediAssist AI account.
+          Create a new password for your
+          MediAssist AI account.
         </p>
 
         <form onSubmit={handleResetPassword}>
-
-          {/* ==================================================
-              NEW PASSWORD
-          ================================================== */}
 
           <div className="form-group">
 
@@ -265,11 +224,6 @@ function ResetPassword() {
             </div>
 
           </div>
-
-
-          {/* ==================================================
-              CONFIRM PASSWORD
-          ================================================== */}
 
           <div className="form-group">
 
@@ -319,44 +273,17 @@ function ResetPassword() {
 
           </div>
 
-
-          {/* ==================================================
-              MESSAGE
-          ================================================== */}
-
           {message && (
             <div
-              className="form-message"
-              style={{
-                color: message.includes("successfully")
-                  ? "#0f766e"
-                  : "#b91c1c",
-
-                backgroundColor: message.includes("successfully")
-                  ? "#ecfdf5"
-                  : "#fef2f2",
-
-                border: message.includes("successfully")
-                  ? "1px solid #a7f3d0"
-                  : "1px solid #fecaca",
-
-                padding: "12px",
-
-                borderRadius: "8px",
-
-                marginBottom: "16px",
-
-                textAlign: "center"
-              }}
+              className={`form-message ${
+                message.includes("successfully")
+                  ? "reset-success-message"
+                  : "reset-error-message"
+              }`}
             >
               {message}
             </div>
           )}
-
-
-          {/* ==================================================
-              RESET BUTTON
-          ================================================== */}
 
           <button
             type="submit"
@@ -370,25 +297,13 @@ function ResetPassword() {
 
         </form>
 
-
-        {/* ==================================================
-            BACK TO LOGIN
-        ================================================== */}
-
         <p className="switch-auth">
-
           Remember your password?{" "}
 
           <Link to="/login">
             Back to Login
           </Link>
-
         </p>
-
-
-        {/* ==================================================
-            BACK HOME
-        ================================================== */}
 
         <Link
           to="/"

@@ -65,18 +65,26 @@ function HealthHistory() {
       // --------------------------------------------------------
 
       const history = Array.isArray(data)
-  ? data
-  : [];
+        ? data
+        : [];
+
       // --------------------------------------------------------
-      // SORT NEWEST ASSESSMENT FIRST
+      // SORT NEWEST FIRST
       // --------------------------------------------------------
 
-      const sortedHistory = [...history].sort((a, b) => {
-        return (
-          new Date(`${b.created_at}Z`).getTime() -
-          new Date(`${a.created_at}Z`).getTime()
-        );
-      });
+      const sortedHistory = [...history].sort(
+        (a, b) => {
+          const dateA = new Date(
+            `${a.created_at}Z`
+          ).getTime();
+
+          const dateB = new Date(
+            `${b.created_at}Z`
+          ).getTime();
+
+          return dateB - dateA;
+        }
+      );
 
       setAssessments(sortedHistory);
     } catch (error) {
@@ -95,7 +103,7 @@ function HealthHistory() {
   }, [navigate]);
 
   // ============================================================
-  // LOAD HISTORY WHEN PAGE OPENS
+  // LOAD HISTORY ON PAGE OPEN
   // ============================================================
 
   useEffect(() => {
@@ -122,18 +130,9 @@ function HealthHistory() {
       return "Unknown date";
     }
 
-    /*
-      Backend returns something like:
-
-      2026-08-31T18:31:20.212933
-
-      PostgreSQL/FastAPI is giving us the UTC time
-      without the timezone marker.
-
-      Adding Z tells JavaScript that the value is UTC.
-    */
-
-    const date = new Date(`${dateString}Z`);
+    const date = new Date(
+      `${dateString}Z`
+    );
 
     if (Number.isNaN(date.getTime())) {
       return "Unknown date";
@@ -147,7 +146,25 @@ function HealthHistory() {
   };
 
   // ============================================================
-  // LOADING SCREEN
+  // GET SEVERITY CLASS
+  // ============================================================
+
+  const getSeverityClass = (severity) => {
+    const value = Number(severity);
+
+    if (value >= 8) {
+      return "severity-high";
+    }
+
+    if (value >= 5) {
+      return "severity-medium";
+    }
+
+    return "severity-low";
+  };
+
+  // ============================================================
+  // LOADING
   // ============================================================
 
   if (loading) {
@@ -158,7 +175,16 @@ function HealthHistory() {
 
           <div
             className="history-logo"
-            onClick={() => navigate("/dashboard")}
+            onClick={() =>
+              navigate("/dashboard")
+            }
+            role="button"
+            tabIndex={0}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                navigate("/dashboard");
+              }
+            }}
           >
             MediAssist <span>AI</span>
           </div>
@@ -167,10 +193,10 @@ function HealthHistory() {
 
         <main className="history-container">
 
-          <div className="history-message">
+          <div className="history-message history-loading-message">
 
-            <div className="loading-icon">
-              ⏳
+            <div className="history-status-icon">
+              <span className="history-loading-spinner"></span>
             </div>
 
             <h2>
@@ -204,7 +230,16 @@ function HealthHistory() {
 
         <div
           className="history-logo"
-          onClick={() => navigate("/dashboard")}
+          onClick={() =>
+            navigate("/dashboard")
+          }
+          role="button"
+          tabIndex={0}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              navigate("/dashboard");
+            }
+          }}
         >
           MediAssist <span>AI</span>
         </div>
@@ -212,14 +247,18 @@ function HealthHistory() {
         <div className="history-header-actions">
 
           <button
-            className="back-dashboard-button"
-            onClick={() => navigate("/dashboard")}
+            type="button"
+            className="history-back-button"
+            onClick={() =>
+              navigate("/dashboard")
+            }
           >
             ← Dashboard
           </button>
 
           <button
-            className="logout-button"
+            type="button"
+            className="history-logout-button"
             onClick={handleLogout}
           >
             Logout
@@ -229,9 +268,8 @@ function HealthHistory() {
 
       </header>
 
-
       {/* ======================================================
-          MAIN CONTENT
+          MAIN
       ====================================================== */}
 
       <main className="history-container">
@@ -248,29 +286,31 @@ function HealthHistory() {
 
           <div>
 
+            <span className="history-eyebrow">
+              YOUR RECORDS
+            </span>
+
             <h1>
               Health History
             </h1>
 
             <p>
-              View your previous symptom assessments and AI
-              health information.
+              View your previous symptom assessments and
+              AI-generated general health information.
             </p>
 
           </div>
 
         </div>
 
-
         {/* ====================================================
             ERROR
         ==================================================== */}
 
         {error && (
-
           <div className="history-message error-message">
 
-            <div className="loading-icon">
+            <div className="history-status-icon">
               ⚠️
             </div>
 
@@ -283,16 +323,15 @@ function HealthHistory() {
             </p>
 
             <button
-              className="retry-button"
+              type="button"
+              className="history-retry-button"
               onClick={loadHistory}
             >
               Try Again
             </button>
 
           </div>
-
         )}
-
 
         {/* ====================================================
             EMPTY HISTORY
@@ -300,10 +339,9 @@ function HealthHistory() {
 
         {!error &&
           assessments.length === 0 && (
-
             <div className="history-message">
 
-              <div className="loading-icon">
+              <div className="history-status-icon">
                 📋
               </div>
 
@@ -317,16 +355,17 @@ function HealthHistory() {
               </p>
 
               <button
-                className="assessment-button"
-                onClick={() => navigate("/assessment")}
+                type="button"
+                className="history-assessment-button"
+                onClick={() =>
+                  navigate("/assessment")
+                }
               >
                 🩺 Start Assessment
               </button>
 
             </div>
-
           )}
-
 
         {/* ====================================================
             ASSESSMENT LIST
@@ -334,160 +373,163 @@ function HealthHistory() {
 
         {!error &&
           assessments.length > 0 && (
-
             <div className="history-list">
 
-              {/* ==================================================
-                  SUMMARY
-              ================================================== */}
+              {/* SUMMARY */}
 
               <div className="history-summary">
 
-                <strong>
-                  {assessments.length}
-                </strong>
+                <div className="history-summary-icon">
+                  ✓
+                </div>
 
-                <span>
-                  {assessments.length === 1
-                    ? " Assessment"
-                    : " Assessments"}
-                </span>
+                <div>
+                  <strong>
+                    {assessments.length}
+                  </strong>
+
+                  <span>
+                    {assessments.length === 1
+                      ? " completed assessment"
+                      : " completed assessments"}
+                  </span>
+                </div>
 
               </div>
 
+              {/* CARDS */}
 
-              {/* ==================================================
-                  ASSESSMENT CARDS
-              ================================================== */}
+              {assessments.map(
+                (assessment, index) => (
+                  <article
+                    className="history-card"
+                    key={assessment.id}
+                    style={{
+                      "--history-index": index,
+                    }}
+                  >
 
-              {assessments.map((assessment) => (
+                    {/* CARD HEADER */}
 
-                <article
-                  className="history-card"
-                  key={assessment.id}
-                >
+                    <div className="history-card-header">
 
-                  {/* =================================================
-                      CARD HEADER
-                  ================================================= */}
+                      <div className="history-card-heading">
 
-                  <div className="history-card-header">
+                        <div className="history-card-icon">
+                          🩺
+                        </div>
 
-                    <div>
+                        <div>
 
-                      <h2>
-                        🩺 Symptom Assessment
-                      </h2>
+                          <h2>
+                            Symptom Assessment
+                          </h2>
 
-                      <p>
-                        {formatDate(
-                          assessment.created_at
-                        )}
-                      </p>
+                          <p>
+                            {formatDate(
+                              assessment.created_at
+                            )}
+                          </p>
+
+                        </div>
+
+                      </div>
+
+                      <div
+                        className={`severity-badge ${getSeverityClass(
+                          assessment.severity
+                        )}`}
+                      >
+                        Severity:{" "}
+                        {assessment.severity ?? "N/A"}/10
+                      </div>
 
                     </div>
 
-
-                    {/* SEVERITY */}
-
-                    <div className="severity-badge">
-
-                      Severity:{" "}
-                      {assessment.severity ?? "N/A"}
-                      /10
-
-                    </div>
-
-                  </div>
-
-
-                  {/* =================================================
-                      SYMPTOMS
-                  ================================================= */}
-
-                  <div className="history-section">
-
-                    <h3>
-                      Symptoms
-                    </h3>
-
-                    <p>
-                      {assessment.symptoms ||
-                        "No symptoms provided."}
-                    </p>
-
-                  </div>
-
-
-                  {/* =================================================
-                      DURATION
-                  ================================================= */}
-
-                  {assessment.duration && (
+                    {/* SYMPTOMS */}
 
                     <div className="history-section">
 
                       <h3>
-                        Duration
+                        Symptoms
                       </h3>
 
                       <p>
-                        {assessment.duration}
+                        {assessment.symptoms ||
+                          "No symptoms provided."}
                       </p>
 
                     </div>
 
-                  )}
+                    {/* DURATION */}
 
+                    {assessment.duration && (
+                      <div className="history-section">
 
-                  {/* =================================================
-                      ADDITIONAL INFORMATION
-                  ================================================= */}
+                        <h3>
+                          Duration
+                        </h3>
 
-                  {assessment.additional_info && (
+                        <p>
+                          {assessment.duration}
+                        </p>
 
-                    <div className="history-section">
+                      </div>
+                    )}
 
-                      <h3>
-                        Additional Information
-                      </h3>
+                    {/* ADDITIONAL INFORMATION */}
 
-                      <p>
-                        {assessment.additional_info}
-                      </p>
+                    {assessment.additional_info && (
+                      <div className="history-section">
+
+                        <h3>
+                          Additional Information
+                        </h3>
+
+                        <p>
+                          {assessment.additional_info}
+                        </p>
+
+                      </div>
+                    )}
+
+                    {/* AI RESPONSE */}
+
+                    <div className="ai-analysis">
+
+                      <div className="ai-analysis-heading">
+
+                        <div className="ai-analysis-icon">
+                          🤖
+                        </div>
+
+                        <div>
+                          <h3>
+                            MediAssist AI Analysis
+                          </h3>
+
+                          <span>
+                            General health information
+                          </span>
+                        </div>
+
+                      </div>
+
+                      <div className="ai-response">
+                        <ReactMarkdown>
+                          {assessment.ai_response ||
+                            "No AI response available."}
+                        </ReactMarkdown>
+                      </div>
 
                     </div>
 
-                  )}
-
-
-                  {/* =================================================
-                      AI RESPONSE
-                  ================================================= */}
-
-                  <div className="ai-analysis">
-
-                    <h3>
-                      🤖 MediAssist AI Analysis
-                    </h3>
-
-                    <div className="ai-response">
-  <ReactMarkdown>
-    {assessment.ai_response ||
-      "No AI response available."}
-  </ReactMarkdown>
-</div>
-
-                  </div>
-
-                </article>
-
-              ))}
+                  </article>
+                )
+              )}
 
             </div>
-
           )}
-
 
         {/* ====================================================
             DISCLAIMER
@@ -495,14 +537,21 @@ function HealthHistory() {
 
         <div className="history-disclaimer">
 
-          ⚠️ <strong>Important:</strong>{" "}
+          <span>
+            ⚠️
+          </span>
 
-          Your health history contains information provided
-          during your assessments. MediAssist AI provides
-          general health information and does not provide a
-          medical diagnosis. For serious or emergency symptoms,
-          consult a qualified healthcare professional or
-          emergency service.
+          <div>
+            <strong>
+              Important:
+            </strong>{" "}
+            Your health history contains information provided
+            during your assessments. MediAssist AI provides
+            general health information and does not provide
+            a medical diagnosis. For serious or emergency
+            symptoms, consult a qualified healthcare
+            professional or emergency service.
+          </div>
 
         </div>
 

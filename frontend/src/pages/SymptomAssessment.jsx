@@ -26,7 +26,6 @@ function SymptomAssessment() {
 
   const [spellingWarnings, setSpellingWarnings] = useState([]);
 
-
   // ============================================================
   // COMMON SPELLING CORRECTIONS
   // ============================================================
@@ -36,70 +35,50 @@ function SymptomAssessment() {
     headake: "headache",
     hedake: "headache",
     headach: "headache",
-
     fevr: "fever",
     feaver: "fever",
     fevre: "fever",
-
     coughh: "cough",
     coug: "cough",
-
     tirdness: "tiredness",
     tirednes: "tiredness",
     tirednss: "tiredness",
-
     vomitng: "vomiting",
     vomitting: "vomiting",
     vomting: "vomiting",
-
     nausia: "nausea",
     nusea: "nausea",
-
     diarrhoea: "diarrhea",
     diarhea: "diarrhea",
     diarhoea: "diarrhea",
-
     stomch: "stomach",
     stomak: "stomach",
-
     throath: "throat",
     throt: "throat",
-
     diziness: "dizziness",
     dizzines: "dizziness",
     dizines: "dizziness",
-
     weekness: "weakness",
     weaknes: "weakness",
-
     breathles: "breathless",
     brething: "breathing",
     breathng: "breathing",
-
     migrane: "migraine",
-
     alergic: "allergic",
     alergy: "allergy",
-
     temprature: "temperature",
     temprture: "temperature",
-
     pane: "pain",
     muscel: "muscle",
     cheast: "chest",
     abdomnal: "abdominal",
-
     constiption: "constipation",
-
     fatige: "fatigue",
     fatique: "fatigue",
-
     anxity: "anxiety",
     infecion: "infection",
-
-    soar: "sore",
+    soar: "sore"
   };
-
 
   // ============================================================
   // CHECK SPELLING
@@ -130,7 +109,7 @@ function SymptomAssessment() {
       ) {
         warnings.push({
           incorrect: word,
-          correct: correction,
+          correct: correction
         });
 
         alreadyFound.add(word);
@@ -139,7 +118,6 @@ function SymptomAssessment() {
 
     setSpellingWarnings(warnings);
   };
-
 
   // ============================================================
   // HANDLE SYMPTOM CHANGE
@@ -156,7 +134,6 @@ function SymptomAssessment() {
       setError("");
     }
   };
-
 
   // ============================================================
   // LOAD USER
@@ -178,7 +155,6 @@ function SymptomAssessment() {
       }
 
       setUser(parsedUser);
-
     } catch (err) {
       console.error("Invalid user data:", err);
 
@@ -188,7 +164,6 @@ function SymptomAssessment() {
       navigate("/login");
     }
   }, [navigate]);
-
 
   // ============================================================
   // GET TOKEN
@@ -213,7 +188,6 @@ function SymptomAssessment() {
     return token;
   };
 
-
   // ============================================================
   // SUBMIT INITIAL ASSESSMENT
   // ============================================================
@@ -230,6 +204,7 @@ function SymptomAssessment() {
       setError(
         "Please enter your symptoms before starting the assessment."
       );
+
       return;
     }
 
@@ -249,7 +224,7 @@ function SymptomAssessment() {
 
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`
           },
 
           body: JSON.stringify({
@@ -268,8 +243,8 @@ function SymptomAssessment() {
             additional_info:
               additionalInfo.trim() !== ""
                 ? additionalInfo.trim()
-                : null,
-          }),
+                : null
+          })
         }
       );
 
@@ -290,6 +265,7 @@ function SymptomAssessment() {
         );
 
         navigate("/login");
+
         return;
       }
 
@@ -301,7 +277,6 @@ function SymptomAssessment() {
       }
 
       setResult(data);
-
     } catch (err) {
       console.error("Assessment error:", err);
 
@@ -309,12 +284,10 @@ function SymptomAssessment() {
         err.message ||
           "Something went wrong while completing the assessment."
       );
-
     } finally {
       setLoading(false);
     }
   };
-
 
   // ============================================================
   // SEND FOLLOW-UP QUESTION
@@ -351,8 +324,8 @@ function SymptomAssessment() {
       ...previous,
       {
         type: "user",
-        text: question,
-      },
+        text: question
+      }
     ]);
 
     // ----------------------------------------------------------
@@ -366,7 +339,11 @@ function SymptomAssessment() {
 
     const conversationContext = conversation
       .map((item) => {
-        return `${item.type === "user" ? "User" : "MediAssist AI"}: ${item.text}`;
+        return `${
+          item.type === "user"
+            ? "User"
+            : "MediAssist AI"
+        }: ${item.text}`;
       })
       .join("\n");
 
@@ -374,32 +351,43 @@ function SymptomAssessment() {
 You are continuing a health assessment conversation for MediAssist AI.
 
 The user originally reported these symptoms:
+
 ${symptoms}
 
 Duration:
+
 ${duration || "Not specified"}
 
 Severity:
+
 ${severity}/10
 
 Additional information:
+
 ${additionalInfo || "None provided"}
 
 Initial MediAssist AI assessment:
+
 ${initialAIResponse}
 
 Previous follow-up conversation:
+
 ${conversationContext || "No previous follow-up questions."}
 
 The user's new follow-up question is:
+
 ${question}
 
 Answer the user's question while keeping the original symptoms and assessment context in mind.
 
 Provide general health information and practical guidance.
+
 Do not claim to diagnose the user.
+
 Do not prescribe medication.
+
 Mention appropriate warning signs or professional medical care when relevant.
+
 Keep the answer clear and understandable.
 `;
 
@@ -411,12 +399,12 @@ Keep the answer clear and understandable.
 
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`
           },
 
           body: JSON.stringify({
-            message: contextualMessage,
-          }),
+            message: contextualMessage
+          })
         }
       );
 
@@ -437,6 +425,7 @@ Keep the answer clear and understandable.
         );
 
         navigate("/login");
+
         return;
       }
 
@@ -447,20 +436,15 @@ Keep the answer clear and understandable.
         );
       }
 
-      // --------------------------------------------------------
-      // ADD AI RESPONSE
-      // --------------------------------------------------------
-
       setConversation((previous) => [
         ...previous,
         {
           type: "ai",
           text:
             data.response ||
-            "MediAssist AI did not return a response.",
-        },
+            "MediAssist AI did not return a response."
+        }
       ]);
-
     } catch (err) {
       console.error(
         "Follow-up question error:",
@@ -473,15 +457,13 @@ Keep the answer clear and understandable.
           type: "ai",
           text:
             err.message ||
-            "Sorry, I could not answer that question right now.",
-        },
+            "Sorry, I could not answer that question right now."
+        }
       ]);
-
     } finally {
       setFollowUpLoading(false);
     }
   };
-
 
   // ============================================================
   // END CURRENT ASSESSMENT
@@ -492,7 +474,6 @@ Keep the answer clear and understandable.
     setFollowUpQuestion("");
   };
 
-
   // ============================================================
   // NEW ASSESSMENT
   // ============================================================
@@ -502,21 +483,18 @@ Keep the answer clear and understandable.
     setDuration("");
     setSeverity(5);
     setAdditionalInfo("");
-
     setSpellingWarnings([]);
     setResult(null);
     setConversation([]);
-
     setFollowUpQuestion("");
     setAssessmentActive(true);
     setError("");
 
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: "smooth"
     });
   };
-
 
   // ============================================================
   // LOADING
@@ -525,17 +503,14 @@ Keep the answer clear and understandable.
   if (!user) {
     return (
       <div className="assessment-loading">
-
         <div className="assessment-loading-spinner"></div>
 
         <span>
           Loading assessment...
         </span>
-
       </div>
     );
   }
-
 
   // ============================================================
   // PAGE
@@ -553,6 +528,13 @@ Keep the answer clear and understandable.
         <div
           className="assessment-logo"
           onClick={() => navigate("/dashboard")}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              navigate("/dashboard");
+            }
+          }}
         >
           MediAssist <span>AI</span>
         </div>
@@ -567,34 +549,9 @@ Keep the answer clear and understandable.
             ← Dashboard
           </button>
 
-          <div className="assessment-user">
-
-            <div className="assessment-user-avatar">
-
-              {user.name
-                ? user.name.charAt(0).toUpperCase()
-                : "U"}
-
-            </div>
-
-            <div className="assessment-user-info">
-
-              <strong>
-                {user.name || "User"}
-              </strong>
-
-              <span>
-                {user.email || ""}
-              </span>
-
-            </div>
-
-          </div>
-
         </div>
 
       </header>
-
 
       {/* ======================================================
           MAIN
@@ -611,7 +568,6 @@ Keep the answer clear and understandable.
           </div>
 
           <div>
-
             <h1>
               Symptom Assessment
             </h1>
@@ -620,11 +576,9 @@ Keep the answer clear and understandable.
               Share your symptoms to receive general health
               information from MediAssist AI.
             </p>
-
           </div>
 
         </div>
-
 
         {/* NOTICE */}
 
@@ -635,7 +589,6 @@ Keep the answer clear and understandable.
           </span>
 
           <div>
-
             <strong>
               Important
             </strong>
@@ -646,21 +599,16 @@ Keep the answer clear and understandable.
               medical diagnosis or replace professional
               medical advice.
             </p>
-
           </div>
 
         </div>
-
 
         {/* ====================================================
             INITIAL RESULT
         ==================================================== */}
 
         {result && (
-
           <section className="assessment-result-card">
-
-            {/* RESULT HEADER */}
 
             <div className="assessment-result-header">
 
@@ -669,7 +617,6 @@ Keep the answer clear and understandable.
               </div>
 
               <div>
-
                 <h2>
                   Your AI Health Information
                 </h2>
@@ -677,13 +624,9 @@ Keep the answer clear and understandable.
                 <p>
                   Based on the information you provided.
                 </p>
-
               </div>
 
             </div>
-
-
-            {/* RESULT CONTENT */}
 
             <div className="assessment-result-content">
 
@@ -698,7 +641,6 @@ Keep the answer clear and understandable.
                 </p>
 
               </div>
-
 
               <div className="result-section">
 
@@ -723,13 +665,11 @@ Keep the answer clear and understandable.
           </section>
         )}
 
-
         {/* ====================================================
             FOLLOW-UP CONVERSATION
         ==================================================== */}
 
         {result && (
-
           <section className="assessment-result-card">
 
             <div className="assessment-result-header">
@@ -753,80 +693,60 @@ Keep the answer clear and understandable.
 
             </div>
 
-
-            {/* CONVERSATION */}
-
             {conversation.length > 0 && (
-
               <div className="assessment-result-content">
 
                 {conversation.map((item, index) => (
-
                   <div
                     key={index}
                     className="result-section"
                   >
 
                     <h3>
-
                       {item.type === "user"
                         ? "You"
                         : "MediAssist AI"}
-
                     </h3>
 
                     <div className="ai-response">
 
                       {item.type === "ai" ? (
-
                         <ReactMarkdown>
                           {item.text}
                         </ReactMarkdown>
-
                       ) : (
-
                         <p>
                           {item.text}
                         </p>
-
                       )}
 
                     </div>
 
                   </div>
-
                 ))}
 
               </div>
-
             )}
 
-
-            {/* FOLLOW-UP INPUT */}
-
             {assessmentActive ? (
-
               <form
                 onSubmit={handleFollowUp}
-                style={{
-                  padding: "20px",
-                  borderTop: "1px solid #e5e7eb"
-                }}
+                className="assessment-follow-up-form"
               >
 
                 <div className="assessment-field">
 
                   <label htmlFor="follow-up-question">
-
                     Ask a follow-up question
-
                   </label>
 
                   <textarea
                     id="follow-up-question"
                     value={followUpQuestion}
                     onChange={(event) =>
-                      setFollowUpQuestion(event.target.value)
+                      setFollowUpQuestion(
+                        event.target.value
+                      )
                     }
                     placeholder="For example: What should I do if the headache gets worse?"
                     rows="4"
@@ -848,7 +768,6 @@ Keep the answer clear and understandable.
 
                 </div>
 
-
                 <div className="assessment-form-actions">
 
                   <button
@@ -868,23 +787,16 @@ Keep the answer clear and understandable.
                       !followUpQuestion.trim()
                     }
                   >
-
                     {followUpLoading
                       ? "Thinking..."
                       : "Ask MediAssist AI →"}
-
                   </button>
 
                 </div>
 
               </form>
-
             ) : (
-
-              <div
-                className="assessment-notice"
-                style={{ margin: "20px" }}
-              >
+              <div className="assessment-ended-notice">
 
                 <span className="assessment-notice-icon">
                   ✅
@@ -898,17 +810,14 @@ Keep the answer clear and understandable.
 
                   <p>
                     This assessment conversation has ended.
-                    You can start a new assessment whenever you're ready.
+                    You can start a new assessment whenever
+                    you're ready.
                   </p>
 
                 </div>
 
               </div>
-
             )}
-
-
-            {/* ACTIONS */}
 
             <div className="assessment-result-actions">
 
@@ -923,7 +832,9 @@ Keep the answer clear and understandable.
               <button
                 type="button"
                 className="history-button"
-                onClick={() => navigate("/health-history")}
+                onClick={() =>
+                  navigate("/health-history")
+                }
               >
                 View Health History →
               </button>
@@ -931,33 +842,23 @@ Keep the answer clear and understandable.
             </div>
 
           </section>
-
         )}
-
 
         {/* ====================================================
             INITIAL ASSESSMENT FORM
         ==================================================== */}
 
         {!result && (
-
           <form
             className="assessment-form"
             onSubmit={handleSubmit}
           >
 
-            {/* SYMPTOMS */}
-
             <div className="assessment-field">
 
               <label htmlFor="symptoms">
-
                 What symptoms are you experiencing?
-
-                <span>
-                  *
-                </span>
-
+                <span>*</span>
               </label>
 
               <textarea
@@ -981,11 +882,7 @@ Keep the answer clear and understandable.
 
               </div>
 
-
-              {/* SPELLING WARNING */}
-
               {spellingWarnings.length > 0 && (
-
                 <div className="spelling-warning">
 
                   <div className="spelling-warning-icon">
@@ -1007,7 +904,6 @@ Keep the answer clear and understandable.
 
                       {spellingWarnings.map(
                         (warning, index) => (
-
                           <div
                             className="spelling-suggestion"
                             key={`${warning.incorrect}-${index}`}
@@ -1026,7 +922,6 @@ Keep the answer clear and understandable.
                             </span>
 
                           </div>
-
                         )
                       )}
 
@@ -1035,13 +930,9 @@ Keep the answer clear and understandable.
                   </div>
 
                 </div>
-
               )}
 
             </div>
-
-
-            {/* DURATION */}
 
             <div className="assessment-field">
 
@@ -1056,7 +947,6 @@ Keep the answer clear and understandable.
                   setDuration(event.target.value)
                 }
               >
-
                 <option value="">
                   Select duration
                 </option>
@@ -1084,13 +974,9 @@ Keep the answer clear and understandable.
                 <option value="More than a month">
                   More than a month
                 </option>
-
               </select>
 
             </div>
-
-
-            {/* SEVERITY */}
 
             <div className="assessment-field">
 
@@ -1136,9 +1022,6 @@ Keep the answer clear and understandable.
 
             </div>
 
-
-            {/* ADDITIONAL INFORMATION */}
-
             <div className="assessment-field">
 
               <label htmlFor="additionalInfo">
@@ -1170,11 +1053,7 @@ Keep the answer clear and understandable.
 
             </div>
 
-
-            {/* ERROR */}
-
             {error && (
-
               <div className="assessment-error">
 
                 <span>
@@ -1186,11 +1065,7 @@ Keep the answer clear and understandable.
                 </p>
 
               </div>
-
             )}
-
-
-            {/* BUTTONS */}
 
             <div className="assessment-form-actions">
 
@@ -1225,16 +1100,13 @@ Keep the answer clear and understandable.
             </div>
 
           </form>
-
         )}
-
 
         {/* ====================================================
             HOW IT WORKS
         ==================================================== */}
 
         {!result && (
-
           <section className="how-assessment-works">
 
             <h2>
@@ -1264,7 +1136,6 @@ Keep the answer clear and understandable.
 
               </div>
 
-
               <div className="assessment-step">
 
                 <div className="step-number">
@@ -1285,7 +1156,6 @@ Keep the answer clear and understandable.
                 </div>
 
               </div>
-
 
               <div className="assessment-step">
 
@@ -1311,16 +1181,13 @@ Keep the answer clear and understandable.
             </div>
 
           </section>
-
         )}
-
 
         {/* DISCLAIMER */}
 
         <div className="assessment-disclaimer">
 
           ⚕️ <strong>Medical Disclaimer:</strong>{" "}
-
           MediAssist AI provides general health information
           and educational guidance. It is not a doctor and
           cannot diagnose conditions or prescribe treatment.

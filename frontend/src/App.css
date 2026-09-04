@@ -1187,3 +1187,200 @@ footer small {
     min-height: 44px;
   }
 }
+
+/* =========================================================
+   MEDIASSISST AI - GLOBAL PAGE ANIMATION
+========================================================= */
+
+.page-transition {
+  width: 100%;
+  min-height: 100vh;
+
+  animation: pageEnter 0.45s ease both;
+}
+
+/* Smooth page entrance */
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition {
+    animation: none;
+  }
+}
+
+/* =========================================================
+   RESET PASSWORD — EXTRA UI
+   ========================================================= */
+
+.reset-page-icon {
+  width: 58px;
+  height: 58px;
+
+  margin: 0 auto 15px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 17px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e8faf2,
+      #eef8fb
+    );
+
+  border: 1px solid rgba(38, 159, 115, 0.12);
+
+  font-size: 1.45rem;
+
+  box-shadow:
+    0 11px 26px rgba(32, 118, 91, 0.09);
+
+  animation: resetIconFloat 3.5s ease-in-out infinite;
+}
+
+.reset-success-card {
+  text-align: center;
+}
+
+.reset-success-icon {
+  width: 74px;
+  height: 74px;
+
+  margin: 0 auto 13px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e2faed,
+      #eaf9f3
+    );
+
+  border: 1px solid rgba(32, 159, 113, 0.15);
+
+  color: #1b9870;
+
+  font-size: 2rem;
+  font-weight: 900;
+
+  box-shadow:
+    0 13px 30px rgba(28, 143, 101, 0.12);
+
+  animation:
+    resetSuccessPop
+    0.55s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
+
+.reset-success-label {
+  margin-bottom: 6px;
+
+  color: #1ca073;
+
+  font-size: 0.66rem;
+  font-weight: 900;
+
+  letter-spacing: 0.13em;
+}
+
+.reset-success-message {
+  border: 1px solid rgba(32, 159, 113, 0.17);
+
+  background:
+    linear-gradient(
+      135deg,
+      #effbf6,
+      #f4fcf9
+    );
+
+  color: #19775b;
+
+  text-align: center;
+}
+
+.reset-error-message {
+  border: 1px solid rgba(188, 86, 86, 0.14);
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff5f5,
+      #fff9f9
+    );
+
+  color: #a14e4e;
+
+  text-align: center;
+}
+
+@keyframes resetIconFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes resetSuccessPop {
+  from {
+    opacity: 0;
+    transform: scale(0.75) translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .reset-page-icon {
+    width: 52px;
+    height: 52px;
+
+    border-radius: 15px;
+
+    font-size: 1.3rem;
+  }
+
+  .reset-success-icon {
+    width: 65px;
+    height: 65px;
+
+    border-radius: 19px;
+
+    font-size: 1.8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reset-page-icon,
+  .reset-success-icon {
+    animation: none !important;
+  }
+}

@@ -162,7 +162,7 @@ function Register() {
 
 
         <p className="auth-subtitle">
-          Join MediAssist AItoday
+          Join MediAssist AI today
         </p>
 
 

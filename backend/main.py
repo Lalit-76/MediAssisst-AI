@@ -140,6 +140,12 @@ class ResetPasswordRequest(BaseModel):
     new_password: str
 
 
+class ChangePasswordRequest(BaseModel):
+    current_password: str
+    new_password: str
+    confirm_password: str
+
+
 class ChatRequest(BaseModel):
     message: str
 
@@ -294,7 +300,7 @@ def health_check():
 def register_user(
     request: RegisterRequest,
     db: Session = Depends(get_db)
-):  # sourcery skip: use-named-expression
+):  # sourcery skip: use-named-expression  # sourcery skip: use-named-expression
 
     existing_user = db.query(models.User).filter(
         models.User.email == request.email
@@ -409,13 +415,11 @@ def forgot_password(
         "If the email is registered, a password reset token has been generated."
     )
 
-    # Do not reveal whether the account exists
     if not user:
         return {
             "message": generic_message
         }
 
-    # Invalidate previous unused tokens
     previous_tokens = (
         db.query(models.PasswordResetToken)
         .filter(
@@ -428,10 +432,8 @@ def forgot_password(
     for old_token in previous_tokens:
         old_token.used = 1
 
-    # Generate secure random token
     reset_token = secrets.token_urlsafe(32)
 
-    # Token expires after 30 minutes
     expires_at = (
         datetime.now(timezone.utc)
         + timedelta(minutes=30)
@@ -451,7 +453,6 @@ def forgot_password(
         "message": generic_message,
 
         # DEVELOPMENT ONLY
-        # Remove this before production deployment.
         "reset_token": reset_token
     }
 
@@ -528,6 +529,80 @@ def reset_password(
             "Password reset successfully. "
             "You can now login with your new password."
         )
+    }
+
+
+# ============================================================
+# CHANGE PASSWORD
+# ============================================================
+
+@app.post("/change-password")
+def change_password(
+    request: ChangePasswordRequest,
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+
+    # ----------------------------------------------------------
+    # CHECK CURRENT PASSWORD
+    # ----------------------------------------------------------
+
+    try:
+        current_password_correct = password_hash.verify(
+            request.current_password,
+            current_user.password_hash
+        )
+    except Exception:
+        current_password_correct = False
+
+    if not current_password_correct:
+        raise HTTPException(
+            status_code=400,
+            detail="Current password is incorrect."
+        )
+
+    # ----------------------------------------------------------
+    # CHECK NEW PASSWORD
+    # ----------------------------------------------------------
+
+    if len(request.new_password) < 6:
+        raise HTTPException(
+            status_code=400,
+            detail="New password must be at least 6 characters long."
+        )
+
+    # ----------------------------------------------------------
+    # CONFIRM NEW PASSWORD
+    # ----------------------------------------------------------
+
+    if request.new_password != request.confirm_password:
+        raise HTTPException(
+            status_code=400,
+            detail="New passwords do not match."
+        )
+
+    # ----------------------------------------------------------
+    # PREVENT SAME PASSWORD
+    # ----------------------------------------------------------
+
+    if request.current_password == request.new_password:
+        raise HTTPException(
+            status_code=400,
+            detail="New password must be different from your current password."
+        )
+
+    # ----------------------------------------------------------
+    # HASH AND SAVE
+    # ----------------------------------------------------------
+
+    current_user.password_hash = password_hash.hash(
+        request.new_password
+    )
+
+    db.commit()
+
+    return {
+        "message": "Password changed successfully."
     }
 
 
@@ -763,7 +838,6 @@ def create_assessment(
 
 # sourcery skip: merge-nested-ifs
     if request.severity is not None:
-
         if request.severity < 1 or request.severity > 10:
             raise HTTPException(
                 status_code=400,
